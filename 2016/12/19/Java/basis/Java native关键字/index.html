@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+
+
+
+
+
+
+<head>
+	
+	
+	<link rel="stylesheet" href="/css/allinone.min.css">
+
+	
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Java的native关键字及JNI | Ting723</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="ting723">
+	<meta name="description" content="">
+
+	
+	<meta name="keywords" content="">
+	
+
+	
+	<link rel="shortcut icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	<link rel="apple-touch-icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="Ting723">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Java的native关键字及JNI | Ting723">
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://ting723.github.io/2016/12/19/Java/basis/Java native关键字/">
+
+	
+	<meta property="article:published_time" content="2016-12-19T00:12:00+08:00"> 
+	<meta property="article:author" content="ting723">
+	<meta property="article:published_first" content="Ting723, /2016/12/19/Java/basis/Java native关键字/">
+	
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="Ting723">
+                    <img src="https://avatars1.githubusercontent.com/u/8120470?s=400&u=103b76c92f327db986a7966663b872e9ab3a7193&v=4" alt="Ting723">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/practice/" title="PRACTICE">PRACTICE</a>
+            </li>
+            
+            <li>
+                <a href="/archives/" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            <li>
+                <a href="/about/" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/tipping/" title="TIPPING">TIPPING</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    
+    <a class="social-link" title="github" href="https://github.com/ting723" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2016-12-18T16:00:00.000Z" itemprop="datePublished">
+                    2016-12-19
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Java/">Java</a>&nbsp;&nbsp;
+                
+                
+            </section>
+            <h1 class="post-full-title">Java的native关键字及JNI</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="native关键字"><a href="#native关键字" class="headerlink" title="native关键字"></a>native关键字</h2><h3 id="native-用法"><a href="#native-用法" class="headerlink" title="native 用法"></a>native 用法</h3><blockquote>
+<p>标记方法为原生函数,也即是这个函数是用C/C++语言实现的,并且被编译成了DLL或so文件,由java调用。<br>native Method: 一个java调用非java代码的接口<br>natvie 可以和除了abstract外的java标识符连用,native即表示这些方法有实现体,而abstract是表示方法无实现体,故不能一起用<br><a id="more"></a></p>
+</blockquote>
+<h3 id="native-特点"><a href="#native-特点" class="headerlink" title="native 特点"></a>native 特点</h3><ul>
+<li>native 是用java和其他语言进行协作时使用,也就是native修饰的方法不是用java写的</li>
+<li>native 的意思是通知操作系统 ,其具体行为由操作系统实现,java只能调用</li>
+<li>java 是跨平台的语言,跨平台的同时牺牲了一些对底层的控制,但需要对底层操作时需要其他语言的帮助,此时就用到native</li>
+<li>native 与其他java标志符连用时,其意义同非Native Method并无差别</li>
+<li>一个native method可以返回任何java类型,包括非基本类型,同样可以进行异常控制</li>
+<li>JVM控制调用本地方法的所有细节</li>
+<li>含有本地方法的类,可以被继承,native方法可以在子类中被重写</li>
+<li>有了本地方法,java可以运行更底层的任务</li>
+</ul>
+<h3 id="JDK-那些部分有native方法"><a href="#JDK-那些部分有native方法" class="headerlink" title="JDK 那些部分有native方法"></a>JDK 那些部分有native方法</h3><ul>
+<li>Object类</li>
+<li>并发包</li>
+<li>其他需要与操作系统接触的点</li>
+</ul>
+<h3 id="native-适用情况"><a href="#native-适用情况" class="headerlink" title="native 适用情况"></a>native 适用情况</h3><ol>
+<li>为了底层的主机平台的某个特性,而这个特性JavaAPI无法访问</li>
+<li>为了访问一个老的系统或者使用一个已有的库,而这个系统或这个库不是用Java编写的</li>
+<li>为了加快程序的性能,将某个时间敏感方法来使用本地方法实现</li>
+<li>与操作系统,某些硬件等交互信息</li>
+</ol>
+<h2 id="JNI"><a href="#JNI" class="headerlink" title="JNI"></a>JNI</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>JNI 即 Java Native Interface的缩写</li>
+<li>JNI允许java与其他语言交互</li>
+</ul>
+<h3 id="Java与dll交互技术"><a href="#Java与dll交互技术" class="headerlink" title="Java与dll交互技术"></a>Java与dll交互技术</h3><ul>
+<li>JNI (只能C/C++实现)</li>
+<li>jawin (基于JNI技术的win系统的应用库)</li>
+<li>jacob (提供java调用microsoft的com对象)</li>
+</ul>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><ul>
+<li>JNI对应用本身可看做是个代理模式</li>
+<li>java程序是jvm通过加载并调用此jni程序来间接调用原生函数</li>
+</ul>
+<h3 id="JNI实现步骤"><a href="#JNI实现步骤" class="headerlink" title="JNI实现步骤"></a>JNI实现步骤</h3><ol>
+<li>编写带用native声明的方法的java类,生成java类</li>
+<li>用javac编译成class文件</li>
+<li>使用<code>javah -jni 类全限定名</code>生成.h文件</li>
+<li>使用c/c++实现本地方法,创建.h文件的实现</li>
+<li>用gcc(或其他)编译成动态链接库,windows生成dll文件,linux下生成.so文件</li>
+</ol>
+<h3 id="JNI实现示例"><a href="#JNI实现示例" class="headerlink" title="JNI实现示例"></a>JNI实现示例</h3><h4 id="windows下实现"><a href="#windows下实现" class="headerlink" title="windows下实现"></a>windows下实现</h4><ul>
+<li><p>java文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloNative</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"HelloNative"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> HelloNative().sayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>.h文件</p>
+</li>
+</ul>
+<p><em>jni.h 这个文件，在%JAVA_HOME%include</em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* DO NOT EDIT THIS FILE - it is machine generated */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="comment">/* Header for class HelloNative */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _Included_HelloNative</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _Included_HelloNative</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Class:     HelloNative</span></span><br><span class="line"><span class="comment"> * Method:    sayHello</span></span><br><span class="line"><span class="comment"> * Signature: ()V</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="comment">//JNIENV:  JNI Environment指针</span></span><br><span class="line"> <span class="comment">// jclas 此Java代码中实例化的Java对象HelloNative的一个句柄</span></span><br><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL Java_HelloNative_sayHello</span><br><span class="line">  (JNIEnv *, jclass);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>用c语言实现的具体实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HelloNative.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_HelloNative_sayHello</span><span class="params">(JNIEnv *env, jclass jc)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello，JNI"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows执行以下命令:</p>
+</li>
+</ul>
+<p><em>gcc使用windows的TMD-GCC</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">javac HelloNative.java</span><br><span class="line"></span><br><span class="line">javah HelloNative</span><br><span class="line"></span><br><span class="line">gcc -m64  -Wl,--add-stdcall-alias -I<span class="string">"C:\Program Files\Java\jdk1.8.0_40\include"</span> -I<span class="string">"C:\Program Files\Java\jdk1.8.0_40\include\win32"</span> -shared -o HelloNative.dll HelloNative.c</span><br><span class="line"></span><br><span class="line">将HelloNative.h 包含到环境变量</span><br><span class="line"><span class="built_in">set</span> PATH=%PATH%;当前目录</span><br><span class="line"></span><br><span class="line">java HelloNative</span><br></pre></td></tr></table></figure>
+<h4 id="Linux下实现"><a href="#Linux下实现" class="headerlink" title="Linux下实现"></a>Linux下实现</h4><ul>
+<li><p>java .h .c代码一样</p>
+</li>
+<li><p>Linux执行以下命令</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">javac HelloNative.java</span><br><span class="line"></span><br><span class="line">javah HelloNative</span><br><span class="line"></span><br><span class="line">gcc -fPIC -D_REENTRANT -I/usr/lib/jvm/java-8-oracle/include -I/usr/lib/jvm/java-8-oracle/include/linux -c HelloNative.c</span><br><span class="line"></span><br><span class="line">gcc -shared HelloNative.o -o libgoodluck.so</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line">java HelloNative</span><br></pre></td></tr></table></figure>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p>链接:</p>
+<p><a href="http://blog.csdn.net/funneies/article/details/8949660" target="_blank" rel="noopener">http://blog.csdn.net/funneies/article/details/8949660</a><br><a href="http://blog.csdn.net/jiakw_1981/article/details/3073613" target="_blank" rel="noopener">http://blog.csdn.net/jiakw_1981/article/details/3073613</a><br><a href="http://blog.chinaunix.net/uid-20180960-id-1972669.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-20180960-id-1972669.html</a><br><a href="http://www.cnblogs.com/Qian123/p/5702574.html#commentform" target="_blank" rel="noopener">http://www.cnblogs.com/Qian123/p/5702574.html#commentform</a><br><a href="http://blog.csdn.net/tanga842428/article/details/52765978" target="_blank" rel="noopener">http://blog.csdn.net/tanga842428/article/details/52765978</a></p>
+
+                </div>
+            </section>
+        </article>
+    </div>
+
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="Java Object类" href="/2016/12/20/Java/basis/Java Object类/">
+            ← Java Object类
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="Hexo安装教程" href="/2016/12/15/hexo/hexo安装教程/">
+            Hexo安装教程 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#native关键字"><span class="toc-text">native关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#native-用法"><span class="toc-text">native 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#native-特点"><span class="toc-text">native 特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK-那些部分有native方法"><span class="toc-text">JDK 那些部分有native方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#native-适用情况"><span class="toc-text">native 适用情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JNI"><span class="toc-text">JNI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java与dll交互技术"><span class="toc-text">Java与dll交互技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式"><span class="toc-text">实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNI实现步骤"><span class="toc-text">JNI实现步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNI实现示例"><span class="toc-text">JNI实现示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#windows下实现"><span class="toc-text">windows下实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux下实现"><span class="toc-text">Linux下实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Ting723 &mdash;</small>
+    <h3 class="read-next-card-header-title">Articles récents</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2018/04/24/MongoDB/MongoDB聚合总结/">MongoDB聚合查询</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2018/04/18/MongoDB/Mongodb查询语法/">MongoDB基础查询语法</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2017/12/24/Java/basis/JDK Composition/">JDK Composition</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+    <header class="read-next-card-header" style="padding-bottom: 20px">
+        <h3 class="read-next-card-header-title">Catégories</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技巧/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/知识点/">知识点</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/规范/">规范</a></li></ul>
+        </ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+	<header class="read-next-card-header" style="padding-bottom: 20px">
+		<h3 class="read-next-card-header-title">Nuage de mot-clés</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/Dubbo/" style="font-size: 14px;">Dubbo</a> <a href="/tags/IDE/" style="font-size: 14px;">IDE</a> <a href="/tags/Java/" style="font-size: 21.5px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 16.5px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 21.5px;">Linux</a> <a href="/tags/Object/" style="font-size: 14px;">Object</a> <a href="/tags/Problem/" style="font-size: 14px;">Problem</a> <a href="/tags/SVN/" style="font-size: 14px;">SVN</a> <a href="/tags/Vim/" style="font-size: 16.5px;">Vim</a> <a href="/tags/annotation/" style="font-size: 14px;">annotation</a> <a href="/tags/design-pattern/" style="font-size: 14px;">design pattern</a> <a href="/tags/editorConfig/" style="font-size: 14px;">editorConfig</a> <a href="/tags/efficiency/" style="font-size: 21.5px;">efficiency</a> <a href="/tags/hexo/" style="font-size: 16.5px;">hexo</a> <a href="/tags/java/" style="font-size: 24px;">java</a> <a href="/tags/java-basis/" style="font-size: 19px;">java basis</a> <a href="/tags/jdk/" style="font-size: 14px;">jdk</a> <a href="/tags/maven/" style="font-size: 14px;">maven</a> <a href="/tags/mongodb/" style="font-size: 16.5px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/native/" style="font-size: 14px;">native</a> <a href="/tags/nodejs/" style="font-size: 14px;">nodejs</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tcpCopy/" style="font-size: 14px;">tcpCopy</a> <a href="/tags/vbs/" style="font-size: 14px;">vbs</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Rechercher ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Ting723">Ting723</a>
+			&copy; 2019
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+        </nav>
+    </div>
+</footer>
+	
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="Ting723">
+			
+                <img src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723 icon">
+			
+            <span>Ting723</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Java的native关键字及JNI</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'wwNopfiuPd0mm7w4SGo7OmXE-gzGzoHsz',
+        appKey: 'kw3i3QGtS9SypfctVJqgk7QN',
+        placeholder: '留下你的疑惑和思考',
+        pageSize: 20,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
+<script>searchFunc("/")</script>
+
+
+
+
+
+</body>
+</html>

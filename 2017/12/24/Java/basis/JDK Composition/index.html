@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+
+
+
+
+
+
+<head>
+	
+	
+	<link rel="stylesheet" href="/css/allinone.min.css">
+
+	
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>JDK Composition | Ting723</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="ting723">
+	<meta name="description" content="">
+
+	
+	<meta name="keywords" content="">
+	
+
+	
+	<link rel="shortcut icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	<link rel="apple-touch-icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="Ting723">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="JDK Composition | Ting723">
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://ting723.github.io/2017/12/24/Java/basis/JDK Composition/">
+
+	
+	<meta property="article:published_time" content="2017-12-24T00:12:00+08:00"> 
+	<meta property="article:author" content="ting723">
+	<meta property="article:published_first" content="Ting723, /2017/12/24/Java/basis/JDK Composition/">
+	
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="Ting723">
+                    <img src="https://avatars1.githubusercontent.com/u/8120470?s=400&u=103b76c92f327db986a7966663b872e9ab3a7193&v=4" alt="Ting723">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/practice/" title="PRACTICE">PRACTICE</a>
+            </li>
+            
+            <li>
+                <a href="/archives/" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            <li>
+                <a href="/about/" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/tipping/" title="TIPPING">TIPPING</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    
+    <a class="social-link" title="github" href="https://github.com/ting723" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2017-12-23T16:00:00.000Z" itemprop="datePublished">
+                    2017-12-24
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Java/">Java</a>&nbsp;&nbsp;
+                
+                
+            </section>
+            <h1 class="post-full-title">JDK Composition</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="JDK版本"><a href="#JDK版本" class="headerlink" title="JDK版本"></a>JDK版本</h2><p><em>采用的JDK版本为:</em><br>查看命令:<code>java -version</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;1.8.0_112&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_112-b15)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.112-b15, mixed mode)</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="JDK文件基本组成"><a href="#JDK文件基本组成" class="headerlink" title="JDK文件基本组成"></a>JDK文件基本组成</h2><table>
+<thead>
+<tr>
+<th>目录及文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bin/</td>
+<td>Java 可执行文件,包括javac,javaw等</td>
+</tr>
+<tr>
+<td>db/</td>
+<td>Java DB(Apache Derby open source database),可做内嵌数据库</td>
+</tr>
+<tr>
+<td>include/</td>
+<td>.c,.h文件等Code 用于编译本地方法(native方法),支持JNI和JVMTI接口</td>
+</tr>
+<tr>
+<td>jre/</td>
+<td>Java Runtime Environment 根目录,用于和操作系统交换(包含很多dll文件)</td>
+</tr>
+<tr>
+<td>lib/</td>
+<td>Jar文件,为开发提供必要的开发包,如java.*都在rt.jar中</td>
+</tr>
+<tr>
+<td>javafx-src.zip</td>
+<td>javafx源码包</td>
+</tr>
+<tr>
+<td>src.zip</td>
+<td>java源码包</td>
+</tr>
+<tr>
+<td>README.html</td>
+<td>README</td>
+</tr>
+<tr>
+<td>COPYRIGHT</td>
+<td>版权信息</td>
+</tr>
+<tr>
+<td>LICENSE</td>
+<td>许可证</td>
+</tr>
+<tr>
+<td>release</td>
+<td>发布信息</td>
+</tr>
+<tr>
+<td>THIRDPARTYLICENSEREADME.txt</td>
+<td>第三方代码许可证</td>
+</tr>
+<tr>
+<td>JAVAFX.txt</td>
+<td>javaFx的第三方许可证信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="JDK目录"><a href="#JDK目录" class="headerlink" title="JDK目录"></a>JDK目录</h2><h3 id="bin目录"><a href="#bin目录" class="headerlink" title="bin目录"></a>bin目录</h3><ul>
+<li>windows环境下bin目录文件释义</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appletviewer.exe</td>
+<td>一种执行HTML文件上的Java小程序类的Java浏览器(已经很少使用)</td>
+</tr>
+<tr>
+<td>extcheck.exe</td>
+<td>检测目标 jar 文件与当前安装方式扩展 jar 文件间的版本冲突</td>
+</tr>
+<tr>
+<td>idlj.exe</td>
+<td>IDL转Java编译器(IDL-to-Java Compiler),用于为指定的IDL文件生成Java绑定。IDL意即接口定义语言(Interface Definition Language)。</td>
+</tr>
+<tr>
+<td>jabswitch.exe</td>
+<td>Java访问桥开关(Java Access Bridge switch),用于启用/禁用Java访问桥。Java访问桥内置于Java 7 Update 6及以上版本,主要为Windows系统平台提供一套访问Java应用的API。</td>
+</tr>
+<tr>
+<td>jar.exe</td>
+<td>jar文件管理工具,主要用于打包压缩、解压jar文件。</td>
+</tr>
+<tr>
+<td>jarsigner.exe</td>
+<td>jar密匙签名工具</td>
+</tr>
+<tr>
+<td>java-rmi.exe</td>
+<td>Java远程方法调用(Java Remote Method Invocation)工具,主要用于在客户机上调用远程服务器上的对象。</td>
+</tr>
+<tr>
+<td>java.exe</td>
+<td>Java运行工具,用于运行.class字节码文件或.jar文件。</td>
+</tr>
+<tr>
+<td>javac.exe</td>
+<td>Java编译工具(Java Compiler),用于编译Java源代码文件。</td>
+</tr>
+<tr>
+<td>javadoc.exe</td>
+<td>Java文档工具,主要用于根据Java源代码中的注释信息生成HTML格式的API帮助文档。</td>
+</tr>
+<tr>
+<td>javafxpackager.exe</td>
+<td>JavaFX包装器,用于执行与封装或签名JavaFX应用有关的任务。(已经重命名javapackager.exe) 后续版本会删除</td>
+</tr>
+<tr>
+<td>javapackager.exe</td>
+<td>执行与封装或签名Java和JavaFx应用相关的任务</td>
+</tr>
+<tr>
+<td>javah.exe</td>
+<td>Java头文件工具,用于根据Java类生成C/C++头文件和源文件(主要用于JNI开发领域)。</td>
+</tr>
+<tr>
+<td>javap.exe</td>
+<td>Java反编译工具,主要用于根据Java字节码文件反汇编为Java源代码文件。</td>
+</tr>
+<tr>
+<td>javaw.exe</td>
+<td>Java运行工具,用于运行.class字节码文件或.jar文件,但不会显示控制台输出信息,适用于运行图形化程序。</td>
+</tr>
+<tr>
+<td>javaws.exe</td>
+<td>Java Web Start,使您可以从Web下载和运行Java应用程序,下载、安装、运行、更新Java应用程序都非常简单方便。</td>
+</tr>
+<tr>
+<td>jcmd.exe</td>
+<td>Java 命令行(Java Command),用于向正在运行的JVM发送诊断命令请求。</td>
+</tr>
+<tr>
+<td>jconsole.exe</td>
+<td>图形化用户界面的监测工具,主要用于监测并显示运行于Java平台上的应用程序的性能和资源占用等信息。</td>
+</tr>
+<tr>
+<td>jdb.exe</td>
+<td>Java调试工具(Java Debugger),主要用于对Java应用进行断点调试。</td>
+</tr>
+<tr>
+<td>jdeps.exe</td>
+<td>可以展示包层级和类层级的Java类依赖关系</td>
+</tr>
+<tr>
+<td>jhat.exe</td>
+<td>是一个Java堆复制浏览器。这个工具分析Java堆复制文件（例如,由上面的”jmap -dump”所产生的）。Jhat启动一个允许堆中的对象在web浏览器中进行分析的web服务器。这个工具并不是想用于应用系统中而是用于”离线”分 析。”jhat工具是平台独立的”,其意思是,它可以被用来观察在任何平台上所产生的堆复制。例如,我们有可能在Linux系统上使用jhat来观察一个 在Solaris OS上所产生的堆复制。</td>
+</tr>
+<tr>
+<td>jinfo.exe</td>
+<td>打印一个给定的Java进程或核心文件或一个远程调试服务器的Java配置信息。配置信息包括Java系统属性和JVM命令行标志</td>
+</tr>
+<tr>
+<td>jjs.exe</td>
+<td>调用Nashorn引擎(执行Java脚本代码)</td>
+</tr>
+<tr>
+<td>jli.dll</td>
+<td>未知</td>
+</tr>
+<tr>
+<td>jmap.exe</td>
+<td>Java内存映射工具(Java Memory Map),主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。</td>
+</tr>
+<tr>
+<td>jmc.exe</td>
+<td>Java内存映射工具(Java Memory Map),主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。</td>
+</tr>
+<tr>
+<td>jmc.ini</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>jps.exe</td>
+<td>JVM进程状态工具(JVM Process Status Tool),用于显示目标系统上的HotSpot JVM的Java进程信息。</td>
+</tr>
+<tr>
+<td>jrunscript.exe</td>
+<td>是一个命令行脚本外壳。jrunscript支持交互模式(read-eval-print)和批处理模式(-f选项)的脚本执行。这是一个脚本语言的独立外壳。默认情况下,使用JavaScript,但是我们可以使用-l选项来指定不同的语言。通过Java与脚本语言的通讯,jrunscript支持”探索性编程”风格,实验性质</td>
+</tr>
+<tr>
+<td>jsadebugd.exe</td>
+<td>Java可用性代理调试守护进程(Java Serviceability Agent Debug Daemon),主要用于附加到指定的Java进程、核心文件,或充当一个调试服务器。</td>
+</tr>
+<tr>
+<td>jstack.exe</td>
+<td>Java堆栈跟踪工具,主要用于打印指定Java进程、核心文件或远程调试服务器的Java线程的堆栈跟踪信息。</td>
+</tr>
+<tr>
+<td>jstat.exe</td>
+<td>JVM统计监测工具(JVM Statistics Monitoring Tool),主要用于监测并显示JVM的性能统计信息。</td>
+</tr>
+<tr>
+<td>jstatd.exe</td>
+<td>jstatd(VM jstatd Daemon)工具是一个RMI服务器应用,用于监测HotSpot JVM的创建和终止,并提供一个接口,允许远程监测工具附加到运行于本地主机的JVM上。</td>
+</tr>
+<tr>
+<td>jvisualvm.exe</td>
+<td>JVM监测、故障排除、分析工具,主要以图形化界面的方式提供运行于指定虚拟机的Java应用程序的详细信息。</td>
+</tr>
+<tr>
+<td>keytool.exe</td>
+<td>密钥和证书管理工具,主要用于密钥和证书的创建、修改、删除等。</td>
+</tr>
+<tr>
+<td>kinit.exe</td>
+<td>主要用于获取或缓存Kerberos协议的票据授权票据。</td>
+</tr>
+<tr>
+<td>klist.exe</td>
+<td>允许用户查看本地凭据缓存和密钥表中的条目(用于Kerberos协议)。</td>
+</tr>
+<tr>
+<td>ktab.exe</td>
+<td>Kerberos密钥表管理工具,允许用户管理存储于本地密钥表中的主要名称和服务密钥。</td>
+</tr>
+<tr>
+<td>msvcr100.dll</td>
+<td>VS2010的一个动态链接库</td>
+</tr>
+<tr>
+<td>native2ascii.exe</td>
+<td>本地编码到ASCII编码的转换器(Native-to-ASCII Converter),用于”任意受支持的字符编码”和与之对应的”ASCII编码和(或)Unicode转义”之间的相互转换。</td>
+</tr>
+<tr>
+<td>orbd.exe</td>
+<td>对象请求代理守护进程(Object Request Broker Daemon),它使客户端能够透明地定位和调用位于CORBA环境的服务器上的持久对象。</td>
+</tr>
+<tr>
+<td>pack200.exe</td>
+<td>JAR文件打包压缩工具,它可以利用Java类特有的结构,对普通JAR文件进行高效压缩,以便于能够更快地进行网络传输。</td>
+</tr>
+<tr>
+<td>policytool.exe</td>
+<td>策略工具,用于管理用户策略文件(.java.policy)。</td>
+</tr>
+<tr>
+<td>rmic.exe</td>
+<td>Java RMI 编译器,为使用JRMP或IIOP协议的远程对象生成stub、skeleton、和tie类,也用于生成OMG IDL。</td>
+</tr>
+<tr>
+<td>rmid.exe</td>
+<td>Java RMI 激活系统守护进程,rmid启动激活系统守护进程,允许在虚拟机中注册或激活对象。</td>
+</tr>
+<tr>
+<td>rmiregistry.exe</td>
+<td>Java 远程对象注册表,用于在当前主机的指定端口上创建并启动一个远程对象注册表。</td>
+</tr>
+<tr>
+<td>schemagen.exe</td>
+<td>XML schema生成器,用于生成XML schema文件</td>
+</tr>
+<tr>
+<td>serialver.exe</td>
+<td>序列版本命令,用于生成并返回serialVersionUID。</td>
+</tr>
+<tr>
+<td>servertool.exe</td>
+<td>Java IDL 服务器工具,用于注册、取消注册、启动和终止持久化的服务器</td>
+</tr>
+<tr>
+<td>tnameserv.exe</td>
+<td>Java IDL瞬时命名服务。</td>
+</tr>
+<tr>
+<td>unpack200.exe</td>
+<td>JAR文件解压工具,将一个由pack200打包的文件解压提取为JAR文件。</td>
+</tr>
+<tr>
+<td>wsgen.exe</td>
+<td>XML Web Service 2.0的Java API,生成用于JAX-WS Web Service的JAX-WS便携式产物。</td>
+</tr>
+<tr>
+<td>wsimport.exe</td>
+<td>XML Web Service 2.0的Java API,主要用于根据服务端发布的wsdl文件生成客户端存根及框架</td>
+</tr>
+<tr>
+<td>xjc.exe</td>
+<td>主要用于根据XML schema文件生成对应的Java类。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="db目录"><a href="#db目录" class="headerlink" title="db目录"></a>db目录</h3><ul>
+<li>主要derby数据库的文件</li>
+<li>db 目录的树形结构: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">│   3RDPARTY  第三方开源</span><br><span class="line">│   LICENSE  许可证</span><br><span class="line">│   NOTICE   声明事项</span><br><span class="line">│   README-JDK.html README</span><br><span class="line">│   RELEASE-NOTES.html 版本信息</span><br><span class="line">│</span><br><span class="line">├───bin</span><br><span class="line">│       dblook</span><br><span class="line">│       dblook.bat</span><br><span class="line">│       derby_common.bat</span><br><span class="line">│       ij</span><br><span class="line">│       ij.bat</span><br><span class="line">│       NetworkServerControl</span><br><span class="line">│       NetworkServerControl.bat</span><br><span class="line">│       setEmbeddedCP</span><br><span class="line">│       setEmbeddedCP.bat</span><br><span class="line">│       setNetworkClientCP</span><br><span class="line">│       setNetworkClientCP.bat</span><br><span class="line">│       setNetworkServerCP</span><br><span class="line">│       setNetworkServerCP.bat</span><br><span class="line">│       startNetworkServer</span><br><span class="line">│       startNetworkServer.bat</span><br><span class="line">│       stopNetworkServer</span><br><span class="line">│       stopNetworkServer.bat</span><br><span class="line">│       sysinfo</span><br><span class="line">│       sysinfo.bat</span><br><span class="line">│</span><br><span class="line">└───lib</span><br><span class="line">        derby.jar</span><br><span class="line">        derby.war</span><br><span class="line">        derbyclient.jar</span><br><span class="line">        derbyLocale_cs.jar</span><br><span class="line">        derbyLocale_de_DE.jar</span><br><span class="line">        derbyLocale_es.jar</span><br><span class="line">        derbyLocale_fr.jar</span><br><span class="line">        derbyLocale_hu.jar</span><br><span class="line">        derbyLocale_it.jar</span><br><span class="line">        derbyLocale_ja_JP.jar</span><br><span class="line">        derbyLocale_ko_KR.jar</span><br><span class="line">        derbyLocale_pl.jar</span><br><span class="line">        derbyLocale_pt_BR.jar</span><br><span class="line">        derbyLocale_ru.jar</span><br><span class="line">        derbyLocale_zh_CN.jar</span><br><span class="line">        derbyLocale_zh_TW.jar</span><br><span class="line">        derbynet.jar</span><br><span class="line">        derbyoptionaltools.jar</span><br><span class="line">        derbyrun.jar</span><br><span class="line">        derbytools.jar</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="include目录"><a href="#include目录" class="headerlink" title="include目录"></a>include目录</h3><ul>
+<li>include 树形结构<br><em>主要是一些头文件</em><br><em>包含C语言头文件,支持Java本地接口与Java虚拟机调试程序接口的本地编程技术</em><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">│   classfile_constants.h</span><br><span class="line">│   jawt.h</span><br><span class="line">│   jdwpTransport.h</span><br><span class="line">│   jni.h  jni头文件</span><br><span class="line">│   jvmti.h</span><br><span class="line">│   jvmticmlr.h</span><br><span class="line">│</span><br><span class="line">└───win32</span><br><span class="line">    │   jawt_md.h</span><br><span class="line">    │   jni_md.h</span><br><span class="line">    │</span><br><span class="line">    └───bridge</span><br><span class="line">            AccessBridgeCallbacks.h</span><br><span class="line">            AccessBridgeCalls.c</span><br><span class="line">            AccessBridgeCalls.h</span><br><span class="line">            AccessBridgePackages.h</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="lib目录"><a href="#lib目录" class="headerlink" title="lib目录"></a>lib目录</h3><ul>
+<li>基本含义:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ant-javafx.jar :  Contains Ant tasks for packaging JavaFX applications</span><br><span class="line">dt.jar : 关于运行环境的类库,主要是Swing包</span><br><span class="line">tools.jar : 工具类库 Contains non-core classes for support of the tools and utilities in the JDK,工具类库,它跟我们程序中用到的基础类库没有关系。我们注意到在Path中变量值bin目录下的各个exe工具的大小都很小,一般都在27KB左右.  这是因为它们实际上仅仅相当于是一层代码的包装,这些工具的实现所要用到的类库都在tools.jar中, 用压缩软件打开tools.jar,你会发现有很多文件是和bin目录下的exe工具相对性的</span><br><span class="line">ct.sym : 也是一个压缩包,里面包含rt.jar部分信息</span><br><span class="line">ir.idl : 该文件是文本格式,CORBA为通用对象请求代理体系,其文件格式为idl(待详细了解)</span><br><span class="line">javafx-mx.jar : javafx的mx扩展</span><br><span class="line">jawt.lib : 猜测用于UI窗口,awt</span><br><span class="line">jconsole.jar : JConsole 是一个内置 Java 性能分析器</span><br><span class="line">jvm.lib : jvm相关</span><br><span class="line">orb.idl : IDL not generated by rmic, do not edit These are all in IDL module CORBA The Java classes are in the package org.omg.CORBA See ValueType Semantics:Standard Value Box Definitions (5.3) in CORBA 2.3 spec</span><br><span class="line">packager.jar :  打包用的</span><br><span class="line">sa-jdi.jar : Java Debug Interface</span><br><span class="line">visualvm/ : 为jvisualvm.exe 的需要调用的jar包</span><br><span class="line">missioncontrol/ :为jmc.exe 提供需要调用的jar包</span><br></pre></td></tr></table></figure>
+<h3 id="jre目录"><a href="#jre目录" class="headerlink" title="jre目录"></a>jre目录</h3><h4 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h4><p><em>还得详细补充</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPYRIGHT 版权 </span><br><span class="line">LICENSE  许可</span><br><span class="line">README.txt </span><br><span class="line">THIRDPARTYLICENSEREADME-JAVAFX.txt JAVAFX第三方开源代码许可</span><br><span class="line">THIRDPARTYLICENSEREADME.txt   第三方开源框架代码许可</span><br><span class="line">Welcome.html  欢迎页</span><br><span class="line">bin/ Java 平台所使用工具和类库的可执行文件和 DLL 文件,和%JAVA_HOME%/bin目录下的基本是一样的,有部分是不一样的</span><br><span class="line">lib/ Java 运行环境所使用的核心类库、属性设置和资源文件</span><br></pre></td></tr></table></figure>
+<h4 id="jre中的bin目录"><a href="#jre中的bin目录" class="headerlink" title="jre中的bin目录"></a>jre中的bin目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">│   attach.dll  与动态加载有关,dynamic attach mechanism</span><br><span class="line">│   awt.dll 与图形界面有关</span><br><span class="line">│   bci.dll</span><br><span class="line">│   dcpr.dll</span><br><span class="line">│   decora_sse.dll</span><br><span class="line">│   deploy.dll</span><br><span class="line">│   dt_shmem.dll</span><br><span class="line">│   dt_socket.dll</span><br><span class="line">│   eula.dll</span><br><span class="line">│   fontmanager.dll</span><br><span class="line">│   fxplugins.dll</span><br><span class="line">│   glass.dll</span><br><span class="line">│   glib-lite.dll</span><br><span class="line">│   gstreamer-lite.dll</span><br><span class="line">│   hprof.dll</span><br><span class="line">│   instrument.dll</span><br><span class="line">│   j2pcsc.dll</span><br><span class="line">│   j2pkcs11.dll</span><br><span class="line">│   jaas_nt.dll</span><br><span class="line">│   jabswitch.exe</span><br><span class="line">│   java-rmi.exe</span><br><span class="line">│   java.dll</span><br><span class="line">│   java.exe</span><br><span class="line">│   JavaAccessBridge-64.dll</span><br><span class="line">│   javacpl.cpl</span><br><span class="line">│   javacpl.exe</span><br><span class="line">│   javafx_font.dll</span><br><span class="line">│   javafx_font_t2k.dll</span><br><span class="line">│   javafx_iio.dll</span><br><span class="line">│   javaw.exe</span><br><span class="line">│   javaws.exe</span><br><span class="line">│   java_crw_demo.dll</span><br><span class="line">│   jawt.dll</span><br><span class="line">│   JAWTAccessBridge-64.dll</span><br><span class="line">│   jdwp.dll</span><br><span class="line">│   jfr.dll</span><br><span class="line">│   jfxmedia.dll</span><br><span class="line">│   jfxwebkit.dll</span><br><span class="line">│   jjs.exe</span><br><span class="line">│   jli.dll</span><br><span class="line">│   jp2iexp.dll</span><br><span class="line">│   jp2launcher.exe</span><br><span class="line">│   jp2native.dll</span><br><span class="line">│   jp2ssv.dll</span><br><span class="line">│   jpeg.dll</span><br><span class="line">│   jsdt.dll</span><br><span class="line">│   jsound.dll</span><br><span class="line">│   jsoundds.dll</span><br><span class="line">│   kcms.dll</span><br><span class="line">│   keytool.exe</span><br><span class="line">│   kinit.exe</span><br><span class="line">│   klist.exe</span><br><span class="line">│   ktab.exe</span><br><span class="line">│   lcms.dll</span><br><span class="line">│   management.dll</span><br><span class="line">│   mlib_image.dll</span><br><span class="line">│   msvcp120.dll</span><br><span class="line">│   msvcr100.dll</span><br><span class="line">│   msvcr120.dll</span><br><span class="line">│   net.dll</span><br><span class="line">│   nio.dll</span><br><span class="line">│   npt.dll</span><br><span class="line">│   orbd.exe</span><br><span class="line">│   pack200.exe</span><br><span class="line">│   policytool.exe</span><br><span class="line">│   prism_common.dll</span><br><span class="line">│   prism_d3d.dll</span><br><span class="line">│   prism_sw.dll</span><br><span class="line">│   resource.dll</span><br><span class="line">│   rmid.exe</span><br><span class="line">│   rmiregistry.exe</span><br><span class="line">│   sawindbg.dll</span><br><span class="line">│   servertool.exe</span><br><span class="line">│   splashscreen.dll</span><br><span class="line">│   ssv.dll</span><br><span class="line">│   ssvagent.exe</span><br><span class="line">│   sunec.dll</span><br><span class="line">│   sunmscapi.dll</span><br><span class="line">│   t2k.dll</span><br><span class="line">│   tnameserv.exe</span><br><span class="line">│   unpack.dll</span><br><span class="line">│   unpack200.exe</span><br><span class="line">│   verify.dll</span><br><span class="line">│   w2k_lsa_auth.dll</span><br><span class="line">│   WindowsAccessBridge-64.dll</span><br><span class="line">│   wsdetect.dll</span><br><span class="line">│   zip.dll</span><br><span class="line">│</span><br><span class="line">├───dtplugin</span><br><span class="line">│       deployJava1.dll</span><br><span class="line">│       npdeployJava1.dll</span><br><span class="line">│</span><br><span class="line">├───plugin2</span><br><span class="line">│       msvcr100.dll</span><br><span class="line">│       npjp2.dll</span><br><span class="line">│</span><br><span class="line">└───server</span><br><span class="line">        classes.jsa</span><br><span class="line">        jvm.dll</span><br><span class="line">        Xusage.txt</span><br></pre></td></tr></table></figure>
+<h4 id="jre中的lib目录文件"><a href="#jre中的lib目录文件" class="headerlink" title="jre中的lib目录文件"></a>jre中的lib目录文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">│   accessibility.properties</span><br><span class="line">│   calendars.properties</span><br><span class="line">│   charsets.jar</span><br><span class="line">│   classlist</span><br><span class="line">│   content-types.properties</span><br><span class="line">│   currency.data</span><br><span class="line">│   deploy.jar</span><br><span class="line">│   flavormap.properties</span><br><span class="line">│   fontconfig.bfc</span><br><span class="line">│   fontconfig.properties.src</span><br><span class="line">│   hijrah-config-umalqura.properties</span><br><span class="line">│   javafx.properties</span><br><span class="line">│   javaws.jar</span><br><span class="line">│   jce.jar</span><br><span class="line">│   jfr.jar</span><br><span class="line">│   jfxswt.jar</span><br><span class="line">│   jsse.jar</span><br><span class="line">│   jvm.hprof.txt</span><br><span class="line">│   logging.properties</span><br><span class="line">│   management-agent.jar</span><br><span class="line">│   meta-index</span><br><span class="line">│   net.properties</span><br><span class="line">│   plugin.jar</span><br><span class="line">│   psfont.properties.ja</span><br><span class="line">│   psfontj2d.properties</span><br><span class="line">│   resources.jar</span><br><span class="line">│   rt.jar</span><br><span class="line">│   sound.properties</span><br><span class="line">│   tzdb.dat</span><br><span class="line">│   tzmappings</span><br><span class="line">│</span><br><span class="line">├───amd64</span><br><span class="line">│       jvm.cfg</span><br><span class="line">│</span><br><span class="line">├───applet</span><br><span class="line">├───cmm</span><br><span class="line">│       CIEXYZ.pf</span><br><span class="line">│       GRAY.pf</span><br><span class="line">│       LINEAR_RGB.pf</span><br><span class="line">│       PYCC.pf</span><br><span class="line">│       sRGB.pf</span><br><span class="line">│</span><br><span class="line">├───deploy</span><br><span class="line">│       ffjcext.zip</span><br><span class="line">│       messages.properties</span><br><span class="line">│       messages_de.properties</span><br><span class="line">│       messages_es.properties</span><br><span class="line">│       messages_fr.properties</span><br><span class="line">│       messages_it.properties</span><br><span class="line">│       messages_ja.properties</span><br><span class="line">│       messages_ko.properties</span><br><span class="line">│       messages_pt_BR.properties</span><br><span class="line">│       messages_sv.properties</span><br><span class="line">│       messages_zh_CN.properties</span><br><span class="line">│       messages_zh_HK.properties</span><br><span class="line">│       messages_zh_TW.properties</span><br><span class="line">│       splash.gif</span><br><span class="line">│       splash@2x.gif</span><br><span class="line">│       splash_11-lic.gif</span><br><span class="line">│       splash_11@2x-lic.gif</span><br><span class="line">│</span><br><span class="line">├───ext</span><br><span class="line">│       access-bridge-64.jar</span><br><span class="line">│       cldrdata.jar</span><br><span class="line">│       dnsns.jar</span><br><span class="line">│       jaccess.jar</span><br><span class="line">│       jfxrt.jar</span><br><span class="line">│       localedata.jar</span><br><span class="line">│       meta-index</span><br><span class="line">│       nashorn.jar</span><br><span class="line">│       sunec.jar</span><br><span class="line">│       sunjce_provider.jar</span><br><span class="line">│       sunmscapi.jar</span><br><span class="line">│       sunpkcs11.jar</span><br><span class="line">│       zipfs.jar</span><br><span class="line">│</span><br><span class="line">├───fonts</span><br><span class="line">│       LucidaBrightDemiBold.ttf</span><br><span class="line">│       LucidaBrightDemiItalic.ttf</span><br><span class="line">│       LucidaBrightItalic.ttf</span><br><span class="line">│       LucidaBrightRegular.ttf</span><br><span class="line">│       LucidaSansDemiBold.ttf</span><br><span class="line">│       LucidaSansRegular.ttf</span><br><span class="line">│       LucidaTypewriterBold.ttf</span><br><span class="line">│       LucidaTypewriterRegular.ttf</span><br><span class="line">│</span><br><span class="line">├───images</span><br><span class="line">│   └───cursors</span><br><span class="line">│           cursors.properties</span><br><span class="line">│           invalid32x32.gif</span><br><span class="line">│           win32_CopyDrop32x32.gif</span><br><span class="line">│           win32_CopyNoDrop32x32.gif</span><br><span class="line">│           win32_LinkDrop32x32.gif</span><br><span class="line">│           win32_LinkNoDrop32x32.gif</span><br><span class="line">│           win32_MoveDrop32x32.gif</span><br><span class="line">│           win32_MoveNoDrop32x32.gif</span><br><span class="line">│</span><br><span class="line">├───jfr</span><br><span class="line">│       default.jfc</span><br><span class="line">│       profile.jfc</span><br><span class="line">│</span><br><span class="line">├───management</span><br><span class="line">│       jmxremote.access</span><br><span class="line">│       jmxremote.password.template</span><br><span class="line">│       management.properties</span><br><span class="line">│       snmp.acl.template</span><br><span class="line">│</span><br><span class="line">└───security</span><br><span class="line">        blacklist</span><br><span class="line">        blacklisted.certs</span><br><span class="line">        cacerts</span><br><span class="line">        java.policy</span><br><span class="line">        java.security</span><br><span class="line">        javaws.policy</span><br><span class="line">        local_policy.jar</span><br><span class="line">        trusted.libraries</span><br><span class="line">        US_export_policy.jar</span><br></pre></td></tr></table></figure>
+
+                </div>
+            </section>
+        </article>
+    </div>
+
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="MongoDB基础查询语法" href="/2018/04/18/MongoDB/Mongodb查询语法/">
+            ← MongoDB基础查询语法
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="单例模式" href="/2017/12/12/Java/designPattern/单例模式/">
+            单例模式 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK版本"><span class="toc-text">JDK版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK文件基本组成"><span class="toc-text">JDK文件基本组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK目录"><span class="toc-text">JDK目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bin目录"><span class="toc-text">bin目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db目录"><span class="toc-text">db目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#include目录"><span class="toc-text">include目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib目录"><span class="toc-text">lib目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jre目录"><span class="toc-text">jre目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本结构"><span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jre中的bin目录"><span class="toc-text">jre中的bin目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jre中的lib目录文件"><span class="toc-text">jre中的lib目录文件</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Ting723 &mdash;</small>
+    <h3 class="read-next-card-header-title">Articles récents</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2018/04/24/MongoDB/MongoDB聚合总结/">MongoDB聚合查询</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2018/04/18/MongoDB/Mongodb查询语法/">MongoDB基础查询语法</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2017/12/24/Java/basis/JDK Composition/">JDK Composition</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+    <header class="read-next-card-header" style="padding-bottom: 20px">
+        <h3 class="read-next-card-header-title">Catégories</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技巧/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/知识点/">知识点</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/规范/">规范</a></li></ul>
+        </ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+	<header class="read-next-card-header" style="padding-bottom: 20px">
+		<h3 class="read-next-card-header-title">Nuage de mot-clés</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/Dubbo/" style="font-size: 14px;">Dubbo</a> <a href="/tags/IDE/" style="font-size: 14px;">IDE</a> <a href="/tags/Java/" style="font-size: 21.5px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 16.5px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 21.5px;">Linux</a> <a href="/tags/Object/" style="font-size: 14px;">Object</a> <a href="/tags/Problem/" style="font-size: 14px;">Problem</a> <a href="/tags/SVN/" style="font-size: 14px;">SVN</a> <a href="/tags/Vim/" style="font-size: 16.5px;">Vim</a> <a href="/tags/annotation/" style="font-size: 14px;">annotation</a> <a href="/tags/design-pattern/" style="font-size: 14px;">design pattern</a> <a href="/tags/editorConfig/" style="font-size: 14px;">editorConfig</a> <a href="/tags/efficiency/" style="font-size: 21.5px;">efficiency</a> <a href="/tags/hexo/" style="font-size: 16.5px;">hexo</a> <a href="/tags/java/" style="font-size: 24px;">java</a> <a href="/tags/java-basis/" style="font-size: 19px;">java basis</a> <a href="/tags/jdk/" style="font-size: 14px;">jdk</a> <a href="/tags/maven/" style="font-size: 14px;">maven</a> <a href="/tags/mongodb/" style="font-size: 16.5px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/native/" style="font-size: 14px;">native</a> <a href="/tags/nodejs/" style="font-size: 14px;">nodejs</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tcpCopy/" style="font-size: 14px;">tcpCopy</a> <a href="/tags/vbs/" style="font-size: 14px;">vbs</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Rechercher ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Ting723">Ting723</a>
+			&copy; 2019
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+        </nav>
+    </div>
+</footer>
+	
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="Ting723">
+			
+                <img src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723 icon">
+			
+            <span>Ting723</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">JDK Composition</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'wwNopfiuPd0mm7w4SGo7OmXE-gzGzoHsz',
+        appKey: 'kw3i3QGtS9SypfctVJqgk7QN',
+        placeholder: '留下你的疑惑和思考',
+        pageSize: 20,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
+<script>searchFunc("/")</script>
+
+
+
+
+
+</body>
+</html>

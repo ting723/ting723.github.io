@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+
+
+
+
+
+
+<head>
+	
+	
+	<link rel="stylesheet" href="/css/allinone.min.css">
+
+	
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Java 注解基础知识 | Ting723</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="ting723">
+	<meta name="description" content="">
+
+	
+	<meta name="keywords" content="">
+	
+
+	
+	<link rel="shortcut icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	<link rel="apple-touch-icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="Ting723">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Java 注解基础知识 | Ting723">
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://ting723.github.io/2017/02/25/Java/basis/Java注解/">
+
+	
+	<meta property="article:published_time" content="2017-02-25T20:02:00+08:00"> 
+	<meta property="article:author" content="ting723">
+	<meta property="article:published_first" content="Ting723, /2017/02/25/Java/basis/Java注解/">
+	
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="Ting723">
+                    <img src="https://avatars1.githubusercontent.com/u/8120470?s=400&u=103b76c92f327db986a7966663b872e9ab3a7193&v=4" alt="Ting723">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/practice/" title="PRACTICE">PRACTICE</a>
+            </li>
+            
+            <li>
+                <a href="/archives/" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            <li>
+                <a href="/about/" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/tipping/" title="TIPPING">TIPPING</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    
+    <a class="social-link" title="github" href="https://github.com/ting723" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2017-02-25T12:00:00.000Z" itemprop="datePublished">
+                    2017-02-25
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Java/">Java</a>&nbsp;&nbsp;
+                
+                
+            </section>
+            <h1 class="post-full-title">Java 注解基础知识</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="1-概念及作用"><a href="#1-概念及作用" class="headerlink" title="1. 概念及作用"></a>1. 概念及作用</h2><ul>
+<li><strong>1.1 概念</strong><ul>
+<li>注解即元数据,就是源代码的元数据</li>
+<li>注解在代码中添加信息提供了一种形式化的方法,可以在后续中更方便的使用这些数据</li>
+<li>Annotation是一种应用于类、方法、参数、变量、构造器及包声明中的特殊修饰符。它是一种由JSR-175标准选择用来描述元数据的一种工具。<a id="more"></a></li>
+</ul>
+</li>
+<li><strong>1.2 作用</strong><ul>
+<li>a. 生成文档</li>
+<li>b. 跟踪代码依赖性，实现替代配置文件功能,减少配置。如Spring中的一些注解</li>
+<li>c. 在编译时进行格式检查，如@Override等</li>
+</ul>
+</li>
+<li><strong>1.3 意义</strong><ul>
+<li>注解之前,XML被广泛的应用于描述元数据,XML的维护越来越糟糕</li>
+<li>在需要紧耦合的地方,比XML该容易维护,阅读更方便</li>
+<li>在需要比较多参数设置时,使用xml更方便，而在将某个方法声明为服务时这种紧耦合的情况下,比较适合注解</li>
+<li>XML是松耦合的，注解是紧耦合的</li>
+<li>对于“XML VS 注解” ，可以google了解一下</li>
+<li>对于XML和注解的使用,要具体问题具体分析</li>
+<li>Java的annotation没有行为，只能有数据，实际上就是一组键值对而已。通过解析（parse）Class文件就能把一个annotation需要的键值对都找出来</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-JDK注解"><a href="#2-JDK注解" class="headerlink" title="2. JDK注解"></a>2. JDK注解</h2><ul>
+<li><strong>2.1 Override</strong>: 保证编译时 要重写方法的正确性</li>
+<li><strong>2.2 Deprected</strong>: 提示该方法已经过时</li>
+<li><strong>2.3 SuppressWarnings</strong>: 关闭特定警告信息,参数如下:<ul>
+<li><em>all</em>: to suppress all warnings</li>
+<li><em>boxing</em>: to suppress warnings relative to boxing/unboxing operations</li>
+<li><em>cast</em>: to suppress warnings relative to cast operations</li>
+<li><em>dep-ann</em>: to suppress warnings relative to deprecated annotation</li>
+<li><em>deprecation</em>: to suppress warnings relative to deprecation</li>
+<li><em>fallthrough</em>: to suppress warnings relative to missing breaks in switch statements</li>
+<li><em>finally</em>: to suppress warnings relative to finally block that don’t return</li>
+<li><em>hiding</em>: to suppress warnings relative to locals that hide variable</li>
+<li><em>incomplete-switch</em>: to suppress warnings relative to missing entries in a switch statement (enum case)</li>
+<li><em>nls</em>: to suppress warnings relative to non-nls string literals</li>
+<li><em>null</em>: to suppress warnings relative to null analysis</li>
+<li><em>rawtypes</em>: to suppress warnings relative to un-specific types when using generics on class params</li>
+<li><em>restriction</em>: to suppress warnings relative to usage of discouraged or forbidden references</li>
+<li><em>serial</em>: to suppress warnings relative to missing serialVersionUID field for a serializable class</li>
+<li><em>static-access</em>: to suppress warnings relative to incorrect static access</li>
+<li><em>synthetic-access</em>: to suppress warnings relative to unoptimized access from inner classes</li>
+<li><em>unchecked</em>: to suppress warnings relative to unchecked operations</li>
+<li><em>unqualified-field-access</em>: to suppress warnings relative to field access unqualified</li>
+<li><em>unused</em>: to suppress warnings relative to unused code</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-元注解"><a href="#3-元注解" class="headerlink" title="3. 元注解"></a>3. 元注解</h2><ul>
+<li><strong>3.1 定义</strong> <ul>
+<li>负责注解其他注解</li>
+</ul>
+</li>
+<li><strong>3.2 四种元注解</strong><ul>
+<li><em>@Documented</em></li>
+<li><em>@Target</em></li>
+<li><em>@Retention</em></li>
+<li><em>@Inherited</em></li>
+</ul>
+</li>
+<li><strong>3.3 @Documented</strong><ul>
+<li>用于描述其他类型的annotation应该被作为被标注的程序成员的公共API</li>
+<li>可以用于javadoc 此类的工具文档化</li>
+<li>Document是一个标记注解,没有成员</li>
+</ul>
+</li>
+<li><strong>3.4 @Target</strong><ul>
+<li>说明Annotation所修饰的对象范围,即描述注解的使用范围</li>
+<li>Annotation可被用于packages,types(类,接口,枚举,Annotation类型),类型成员(方法,构造方法,成员变量,枚举值),方法参数和本地变量(如循环变量,catch参数)</li>
+<li>在Annotation类型的声明中使用了target可更加明晰其修饰目标</li>
+<li>取值有: </li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">CONSTRUCTOR</td>
+<td style="text-align:left">用于描述构造器</td>
+</tr>
+<tr>
+<td style="text-align:left">FIELD</td>
+<td style="text-align:left">用于描述域</td>
+</tr>
+<tr>
+<td style="text-align:left">LOCAL_VARIABLE</td>
+<td style="text-align:left">用于描述局部变量</td>
+</tr>
+<tr>
+<td style="text-align:left">METHOD</td>
+<td style="text-align:left">用于描述方法</td>
+</tr>
+<tr>
+<td style="text-align:left">PACKAGE</td>
+<td style="text-align:left">用于描述包</td>
+</tr>
+<tr>
+<td style="text-align:left">PARAMETER</td>
+<td style="text-align:left">用于描述参数</td>
+</tr>
+<tr>
+<td style="text-align:left">TYPE</td>
+<td style="text-align:left">用于描述类、接口(包括注解类型) 或enum声明</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>3.5 @Retention</strong><ul>
+<li>定义了Annotation被保留的时间长短</li>
+<li>表示需要在什么级别保存该注释信息,用于描述注解的生命周期(即被描述的注解在什么范围内有效)</li>
+<li>Retention meta-annotation类型有唯一的value作为成员，它的取值来自java.lang.annotation.RetentionPolicy的枚举类型值。具体实例:</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">用途</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SOURCE</td>
+<td style="text-align:left">在源文件中有效（即源文件保留）</td>
+<td style="text-align:left">仅出现在源代码中，而被编译器丢弃</td>
+</tr>
+<tr>
+<td style="text-align:left">CLASS</td>
+<td style="text-align:left">在class文件中有效（即class保留）</td>
+<td style="text-align:left">被编译在class文件中</td>
+</tr>
+<tr>
+<td style="text-align:left">RUNTIME</td>
+<td style="text-align:left">在运行时有效（即运行时保留）</td>
+<td style="text-align:left">编译在class文件中</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>3.6 @Inherited</strong><ul>
+<li>是一个标记注解</li>
+<li>阐述了某个被标注的类型是被继承的</li>
+<li>使用了@Inherited修饰的annotation类型被用于一个class,则这个annotation将被用于该class的子类</li>
+<li>@Inherited annotation类型是被标注过的class的子类所继承。类并不从实现的接口继承annotation,方法不从它所重载的方法继承annotation</li>
+<li>当@Inherited annotation类型标注的annotation的Retention是RetentionPolicy.RUNTIME，则反射API增强了这种继承性。如果我们使用java.lang.reflect去查询一个@Inherited annotation类型的annotation时，反射代码检查将展开工作：检查class和其父类，直到发现指定的annotation类型被发现，或者到达类继承结构的顶层。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-自定义注解"><a href="#4-自定义注解" class="headerlink" title="4. 自定义注解"></a>4. 自定义注解</h2><ul>
+<li><strong>4.1 格式</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public @interface 注解名&#123;</span><br><span class="line">	定义体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>4.2 注解参数的可支持数据类型:</strong><ul>
+<li>所有基本数据类型(int,float,double,boolean,byte,char,long,short)</li>
+<li>String 类型</li>
+<li>Class类型</li>
+<li>enum类型</li>
+<li>Annotation类型</li>
+<li>以上所有类型的数组</li>
+</ul>
+</li>
+<li><strong>4.3 要求</strong><ul>
+<li>修饰符只能是public 或默认(default)</li>
+<li>参数成员只能用基本类型byte,short,int,long,float,double,boolean八种基本类型和String,Enum,Class,annotations及这些类型的数组</li>
+<li>如果只有一个参数成员,最好将名称设为”value”</li>
+<li>注解元素必须有确定的值,可以在注解中定义默认值,也可以使用注解时指定,非基本类型的值不可为null,常使用空字符串或0作默认值</li>
+<li>在表现一个元素存在或缺失的状态时,定义一下特殊值来表示,如空字符串或负值</li>
+</ul>
+</li>
+<li><strong>4.4 示例:</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * test注解</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zlw</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotation &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-注解处理器"><a href="#5-注解处理器" class="headerlink" title="5. 注解处理器"></a>5. 注解处理器</h2><ul>
+<li><strong>5.1 释义</strong><ul>
+<li>使用注解的过程,重要的是创建注解处理器</li>
+<li>Java SE5 扩展了反射机制的API,以帮助程序员快速的构造自定义注解处理器</li>
+</ul>
+</li>
+<li><strong>5.2 注解处理器类库</strong> <ul>
+<li>java.lang.reflect.AnnotatedElement </li>
+<li>Java使用Annotation接口来代表程序元素面前的注解,该接口是所有Annotation类型的接口。</li>
+<li>java.lang.annotation.Annotation 是所有Annotation类型的父接口</li>
+<li>java.lang.reflect.AnnotatedElement 可以接受注解的程序元素,该接口主要有Class(类定义),Constructor(构造器定义),Filed(类的成员变量定义),Method(类的方法定义),Package(类的包定义),</li>
+<li>java.lang.reflect包所有提供的反射API扩充了读取运行时Annotation信息的能力,当一个Annotation类型被定义为运行时Annotation后,该注解才能运行时可见,当class文件被装载时被保存在class文件中的Annotation才会被虚拟机读取</li>
+<li>AnnotatedElement 接口是所有程序元素（Class、Method和Constructor）的父接口，所以程序通过反射获取了某个类的AnnotatedElement对象之后，程序就可以调用该对象的如下四个个方法来访问Annotation信息：<br>　　<em>方法1</em>：<t extends="" annotation=""> T getAnnotation(Class<t> annotationClass): 返回改程序元素上存在的、指定类型的注解，如果该类型注解不存在，则返回null。<br>　　<em>方法2</em>：Annotation[] getAnnotations():返回该程序元素上存在的所有注解。<br>　　<em>方法3</em>：boolean is AnnotationPresent(Class&lt;?extends Annotation&gt; annotationClass):判断该程序元素上是否包含指定类型的注解，存在则返回true，否则返回false.<br>　　<em>方法4</em>：Annotation[] getDeclaredAnnotations()：返回直接存在于此元素上的所有注释。与此接口中的其他方法不同，该方法将忽略继承的注释。（如果没有注释直接存在于此元素上，则返回长度为零的一个数组。）该方法的调用者可以随意修改返回的数组；这不会对其他调用者返回的数组产生任何影响</t></t></li>
+</ul>
+</li>
+<li><strong>5.3 示例:</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***********注解声明***************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 水果名称注解</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> peida</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FruitName &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 水果颜色注解</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> peida</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FruitColor &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 颜色枚举</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> peida</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">enum</span> Color&#123; BULE,RED,GREEN&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 颜色属性</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">Color <span class="title">fruitColor</span><span class="params">()</span> <span class="keyword">default</span> Color.GREEN</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 水果供应者注解</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> peida</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FruitProvider &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 供应商编号</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 供应商名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 供应商地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">address</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***********注解使用***************/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@FruitName</span>(<span class="string">"Apple"</span>)</span><br><span class="line">    <span class="keyword">private</span> String appleName;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@FruitColor</span>(fruitColor=Color.RED)</span><br><span class="line">    <span class="keyword">private</span> String appleColor;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@FruitProvider</span>(id=<span class="number">1</span>,name=<span class="string">"陕西红富士集团"</span>,address=<span class="string">"陕西省西安市延安路89号红富士大厦"</span>)</span><br><span class="line">    <span class="keyword">private</span> String appleProvider;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAppleColor</span><span class="params">(String appleColor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.appleColor = appleColor;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAppleColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> appleColor;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAppleName</span><span class="params">(String appleName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.appleName = appleName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAppleName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> appleName;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAppleProvider</span><span class="params">(String appleProvider)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.appleProvider = appleProvider;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAppleProvider</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> appleProvider;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">displayName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"水果的名字是：苹果"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***********注解处理器***************/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitInfoUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getFruitInfo</span><span class="params">(Class&lt;?&gt; clazz)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        String strFruitName=<span class="string">" 水果名称："</span>;</span><br><span class="line">        String strFruitColor=<span class="string">" 水果颜色："</span>;</span><br><span class="line">        String strFruitProvicer=<span class="string">"供应商信息："</span>;</span><br><span class="line">        </span><br><span class="line">        Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(Field field :fields)&#123;</span><br><span class="line">            <span class="keyword">if</span>(field.isAnnotationPresent(FruitName.class))&#123;</span><br><span class="line">                FruitName fruitName = (FruitName) field.getAnnotation(FruitName.class);</span><br><span class="line">                strFruitName=strFruitName+fruitName.value();</span><br><span class="line">                System.out.println(strFruitName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(field.isAnnotationPresent(FruitColor.class))&#123;</span><br><span class="line">                FruitColor fruitColor= (FruitColor) field.getAnnotation(FruitColor.class);</span><br><span class="line">                strFruitColor=strFruitColor+fruitColor.fruitColor().toString();</span><br><span class="line">                System.out.println(strFruitColor);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(field.isAnnotationPresent(FruitProvider.class))&#123;</span><br><span class="line">                FruitProvider fruitProvider= (FruitProvider) field.getAnnotation(FruitProvider.class);</span><br><span class="line">                strFruitProvicer=<span class="string">" 供应商编号："</span>+fruitProvider.id()+<span class="string">" 供应商名称："</span>+fruitProvider.name()+<span class="string">" 供应商地址："</span>+fruitProvider.address();</span><br><span class="line">                System.out.println(strFruitProvicer);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***********输出结果***************/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitRun</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        FruitInfoUtil.getFruitInfo(Apple.class);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">====================================</span><br><span class="line"> 水果名称：Apple</span><br><span class="line"> 水果颜色：RED</span><br><span class="line"> 供应商编号：<span class="number">1</span> 供应商名称：陕西红富士集团 供应商地址：陕西省西安市延安路<span class="number">89</span>号红富士大厦</span><br></pre></td></tr></table></figure>
+<h2 id="6-Java-8-中注解新特性"><a href="#6-Java-8-中注解新特性" class="headerlink" title="6. Java 8 中注解新特性"></a>6. Java 8 中注解新特性</h2><ul>
+<li>6.1 @Repeatable 元注解,表示被修饰的注解可以用在同一个声明式或者类型加上多个相同的注解（包含不同的属性值）</li>
+<li>6.2 @Native 元注解,本地方法</li>
+<li>6.3 java8 中Annotation 可以被用在任何使用 Type 的地方</li>
+<li>6.4 示例<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化对象时</span></span><br><span class="line">  String myString = <span class="keyword">new</span> <span class="meta">@NotNull</span> String();</span><br><span class="line">  <span class="comment">//对象类型转化时</span></span><br><span class="line">  myString = (<span class="meta">@NonNull</span> String) str;</span><br><span class="line">  <span class="comment">//使用 implements 表达式时</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">MyList</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> @<span class="title">ReadOnly</span> <span class="title">List</span>&lt;@<span class="title">ReadOnly</span> <span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//使用 throws 表达式时</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validateValues</span><span class="params">()</span> <span class="keyword">throws</span> @Critical ValidationFailedException</span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="7-注解的优缺点及与XML的比较"><a href="#7-注解的优缺点及与XML的比较" class="headerlink" title="7. 注解的优缺点及与XML的比较"></a>7. 注解的优缺点及与XML的比较</h2><ul>
+<li>7.1 优: <ul>
+<li>方便，简洁，配置信息和 Java 代码放在一起，有助于增强程序的内聚性</li>
+<li>若要对配置项进行修改，不得不修改 Java 文件，重新编译打包应用</li>
+</ul>
+</li>
+<li>7.2 缺: <ul>
+<li>分散到各个class文件中，维护性较差</li>
+<li>配置项编码在 Java 文件中，可扩展性差</li>
+</ul>
+</li>
+<li>7.3 与XML比较:<ul>
+<li>简洁</li>
+<li>没有XML配置更强大</li>
+<li>不便于修改,不便于统一管理</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-参考引用"><a href="#8-参考引用" class="headerlink" title="8. 参考引用"></a>8. 参考引用</h2><blockquote>
+<ol>
+<li><a href="http://www.cnblogs.com/peida/archive/2013/04/26/3038503.html" target="_blank" rel="noopener">深入理解Java：注解（Annotation）–注解处理器</a></li>
+<li><a href="http://www.cnblogs.com/peida/archive/2013/04/24/3036689.html" target="_blank" rel="noopener">深入理解Java：注解（Annotation）自定义注解入门</a></li>
+<li><a href="http://www.cnblogs.com/peida/archive/2013/04/23/3036035.html" target="_blank" rel="noopener">深入理解Java：注解（Annotation）基本概念</a></li>
+<li><a href="http://rednaxelafx.iteye.com/blog/1148983" target="_blank" rel="noopener">Java annotation的实例是什么类的？</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_7540bf5f0100t3mv.html" target="_blank" rel="noopener">java中的注释</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_93dc666c0101gzn5.html" target="_blank" rel="noopener">JAVA 注解的几大作用及使用方法详解 </a></li>
+<li><a href="http://www.importnew.com/10294.html" target="_blank" rel="noopener">Java中的注解是如何工作的？</a></li>
+<li><a href="https://segmentfault.com/q/1010000000476689" target="_blank" rel="noopener">Java中使用注解和使用配置文件各有什么优缺点</a></li>
+<li><a href="http://www.cnblogs.com/doit8791/p/4886567.html" target="_blank" rel="noopener">JAVA注解</a></li>
+</ol>
+</blockquote>
+
+                </div>
+            </section>
+        </article>
+    </div>
+
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="单例模式" href="/2017/12/12/Java/designPattern/单例模式/">
+            ← 单例模式
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="Java Object类" href="/2016/12/20/Java/basis/Java Object类/">
+            Java Object类 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-概念及作用"><span class="toc-text">1. 概念及作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-JDK注解"><span class="toc-text">2. JDK注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-元注解"><span class="toc-text">3. 元注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-自定义注解"><span class="toc-text">4. 自定义注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-注解处理器"><span class="toc-text">5. 注解处理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Java-8-中注解新特性"><span class="toc-text">6. Java 8 中注解新特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-注解的优缺点及与XML的比较"><span class="toc-text">7. 注解的优缺点及与XML的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-参考引用"><span class="toc-text">8. 参考引用</span></a></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Ting723 &mdash;</small>
+    <h3 class="read-next-card-header-title">Articles récents</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2018/04/24/MongoDB/MongoDB聚合总结/">MongoDB聚合查询</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2018/04/18/MongoDB/Mongodb查询语法/">MongoDB基础查询语法</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2017/12/24/Java/basis/JDK Composition/">JDK Composition</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+    <header class="read-next-card-header" style="padding-bottom: 20px">
+        <h3 class="read-next-card-header-title">Catégories</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技巧/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/知识点/">知识点</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/规范/">规范</a></li></ul>
+        </ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+	<header class="read-next-card-header" style="padding-bottom: 20px">
+		<h3 class="read-next-card-header-title">Nuage de mot-clés</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/Dubbo/" style="font-size: 14px;">Dubbo</a> <a href="/tags/IDE/" style="font-size: 14px;">IDE</a> <a href="/tags/Java/" style="font-size: 21.5px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 16.5px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 21.5px;">Linux</a> <a href="/tags/Object/" style="font-size: 14px;">Object</a> <a href="/tags/Problem/" style="font-size: 14px;">Problem</a> <a href="/tags/SVN/" style="font-size: 14px;">SVN</a> <a href="/tags/Vim/" style="font-size: 16.5px;">Vim</a> <a href="/tags/annotation/" style="font-size: 14px;">annotation</a> <a href="/tags/design-pattern/" style="font-size: 14px;">design pattern</a> <a href="/tags/editorConfig/" style="font-size: 14px;">editorConfig</a> <a href="/tags/efficiency/" style="font-size: 21.5px;">efficiency</a> <a href="/tags/hexo/" style="font-size: 16.5px;">hexo</a> <a href="/tags/java/" style="font-size: 24px;">java</a> <a href="/tags/java-basis/" style="font-size: 19px;">java basis</a> <a href="/tags/jdk/" style="font-size: 14px;">jdk</a> <a href="/tags/maven/" style="font-size: 14px;">maven</a> <a href="/tags/mongodb/" style="font-size: 16.5px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/native/" style="font-size: 14px;">native</a> <a href="/tags/nodejs/" style="font-size: 14px;">nodejs</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tcpCopy/" style="font-size: 14px;">tcpCopy</a> <a href="/tags/vbs/" style="font-size: 14px;">vbs</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Rechercher ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Ting723">Ting723</a>
+			&copy; 2019
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+        </nav>
+    </div>
+</footer>
+	
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="Ting723">
+			
+                <img src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723 icon">
+			
+            <span>Ting723</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Java 注解基础知识</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'wwNopfiuPd0mm7w4SGo7OmXE-gzGzoHsz',
+        appKey: 'kw3i3QGtS9SypfctVJqgk7QN',
+        placeholder: '留下你的疑惑和思考',
+        pageSize: 20,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
+<script>searchFunc("/")</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+
+
+
+
+
+
+<head>
+	
+	
+	<link rel="stylesheet" href="/css/allinone.min.css">
+
+	
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>MongoDB聚合查询 | Ting723</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="ting723">
+	<meta name="description" content="">
+
+	
+	<meta name="keywords" content="">
+	
+
+	
+	<link rel="shortcut icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	<link rel="apple-touch-icon" href="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="Ting723">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="MongoDB聚合查询 | Ting723">
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://ting723.github.io/2018/04/24/MongoDB/MongoDB聚合总结/">
+
+	
+	<meta property="article:published_time" content="2018-04-24T00:04:00+08:00"> 
+	<meta property="article:author" content="ting723">
+	<meta property="article:published_first" content="Ting723, /2018/04/24/MongoDB/MongoDB聚合总结/">
+	
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="Ting723">
+                    <img src="https://avatars1.githubusercontent.com/u/8120470?s=400&u=103b76c92f327db986a7966663b872e9ab3a7193&v=4" alt="Ting723">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/practice/" title="PRACTICE">PRACTICE</a>
+            </li>
+            
+            <li>
+                <a href="/archives/" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            <li>
+                <a href="/about/" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/tipping/" title="TIPPING">TIPPING</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    
+    <a class="social-link" title="github" href="https://github.com/ting723" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2018-04-23T16:00:00.000Z" itemprop="datePublished">
+                    2018-04-24
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/mongodb/">mongodb</a>&nbsp;&nbsp;
+                
+                
+            </section>
+            <h1 class="post-full-title">MongoDB聚合查询</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <p><strong>本文是以下两篇引用的博客的从新整理修改而成</strong></p>
+<h2 id="零、引用"><a href="#零、引用" class="headerlink" title="零、引用"></a>零、引用</h2><p><a href="https://blog.csdn.net/congcong68/article/details/51619882" target="_blank" rel="noopener"> MongoDB聚合</a></p>
+<p><a href="https://blog.csdn.net/congcong68/article/details/51620040" target="_blank" rel="noopener">MongoDB聚合</a></p>
+<a id="more"></a>
+<h2 id="一、Aggregate-简介"><a href="#一、Aggregate-简介" class="headerlink" title="一、Aggregate 简介"></a>一、Aggregate 简介</h2><p><code>db.collection.aggregate()</code>是基于数据处理的聚合管道,<br>每个文档通过一个由多个阶段组成的管道,<br>可以对每个阶段的管道进行分组、过滤等功能,<br>然后经过一系列的处理,输出相应的结果</p>
+<h2 id="二、处理示例图"><a href="#二、处理示例图" class="headerlink" title="二、处理示例图"></a>二、处理示例图</h2><p><img alt="示例" class="post-img b-lazy" href="/2018/04/24/MongoDB/MongoDB聚合总结/mongodb-aggregate.png" data-src="/2018/04/24/MongoDB/MongoDB聚合总结/mongodb-aggregate.png"></p>
+<h2 id="三、特点"><a href="#三、特点" class="headerlink" title="三、特点:"></a>三、特点:</h2><ol>
+<li>db.collection.aggregate() 可以多个管道,能方便地进行数据的处理</li>
+<li>db.collection.aggregate() 使用了MongoDB内置的原生操作,聚合效率非常高,支持类似SQL Group By的操作,而不再需要用户编写自定义的JavaScript例程</li>
+<li>每个阶段管道限制为100M的内存。如果一个节点管道超过这个极限,MongoDB将产生一个错误。可以设置allowDiskUse=true 将管道数据写入临时文件,解决这个限制</li>
+<li>db.collection.aggregate() 可以作用在分片集合,但结果不能输出在分片集合,MapReduce可以作用在分片集合,结果也可以输出在分片集合</li>
+<li>db.collection.aggregate() 方法可以返回一个指针(cursor),数据放在内存中,直接操作。跟Mongo shell 一样指针操作</li>
+<li>db.collection.aggregate() 输出结果只能保存在一个文档中,BSON Document大小限制为16M。可以通过返回指针解决,版本2.6中后面: db.collection.aggregate()方法返回一个指针,可以返回任何结果集的大小</li>
+</ol>
+<h2 id="四、aggregate语法"><a href="#四、aggregate语法" class="headerlink" title="四、aggregate语法:"></a>四、aggregate语法:</h2><p>语法模板: <code>db.collection.aggregate(pipeline,options)</code></p>
+<ol>
+<li>pipeline 类型是Array 语法: db.collection.aggregate([{},…])</li>
+<li>$group语法: {$group: {_id:<expression>,<field1>:{<accumulator1>:<expression1>},…}}<ul>
+<li>_id 是要进行的分组的key<ul>
+<li>$group可以执行的表达式如下：</li>
+</ul>
+<ul>
+<li>$sum 计算总和</li>
+<li>$avg 计算平均值</li>
+<li>$min 根据分组,获取集合中所有文档对应值的最小值</li>
+<li>$max 根据分组,获取集合中所有文档对应值的最大值</li>
+<li>$push 将指定的表达式的值添加到一个数组中</li>
+<li>$addToSet 将表达式的值添加到一个集合中(无重复值)</li>
+<li>$first 返回每组第一个文档,如果排序，按照排序，如果没有,按照默认的存储的顺序的第一个</li>
+<li>$last 返回每组最后一个文档,如果排序，按照排序，如果没有,按照默认的存储的顺序的最后一个</li>
+</ul>
+</li>
+</ul>
+</expression1></accumulator1></field1></expression></li>
+<li>$project语法:<ul>
+<li>可以对输入文档进行添加新字段或删除现有的字段，可以自定哪些字段显示与不显示。</li>
+</ul>
+</li>
+<li><p>$match</p>
+<ul>
+<li>根据条件用于过滤数据，只输出符合条件的文档，如果放在pipeline前面，根据条件过滤数据，传输到下一个阶段管道，可以提高后续的数据处理效率。还可以放在out之前，对结果进行再一次过滤。</li>
+</ul>
+</li>
+<li><p>$redact</p>
+<ul>
+<li>字段所处的document结构的级别</li>
+</ul>
+</li>
+<li><p>$limit </p>
+<ul>
+<li>用来限制MongoDB聚合管道返回的文档数</li>
+</ul>
+</li>
+<li><p>$skip</p>
+<ul>
+<li>在聚合管道中跳过指定数量的文档，并返回余下的文档。</li>
+</ul>
+</li>
+<li><p>$unwind</p>
+<ul>
+<li>将文档中的某一个数组类型字段拆分成多条，每条包含数组中的一个值。 </li>
+</ul>
+</li>
+<li><p>$sample</p>
+<ul>
+<li>随机选择从其输入指定数量的文档。如果是大于或等于5%的collection的文档，$sample进行收集扫描，进行排序，然后选择顶部的文件。因此，$sample 在收集阶段是受排序的内存限制。</li>
+<li>语法: <code>{ $sample: { size: &lt;positive integer&gt; } }</code></li>
+</ul>
+</li>
+<li><p>$sort</p>
+<ul>
+<li>将输入文档排序后输出。</li>
+</ul>
+</li>
+<li><p>$geoNear</p>
+<ul>
+<li>用于地理位置数据分析。</li>
+</ul>
+</li>
+<li><p>$out</p>
+<ul>
+<li>必须为pipeline最后一个阶段管道，因为是将最后计算结果写入到指定的collection中。</li>
+</ul>
+</li>
+<li><p>$indexStats</p>
+<ul>
+<li>返回数据集合的每个索引的使用情况。</li>
+<li>语法: <code>{ $indexStats: { } }</code></li>
+</ul>
+</li>
+<li><p>group</p>
+<ul>
+<li>将集合中的文档分组，可用于统计结果，$group首先将数据根据key进行分组。</li>
+</ul>
+</li>
+<li><p>options参数</p>
+<ul>
+<li>explain:返回指定aggregate各个阶段管道的执行计划信息。</li>
+<li>他操作返回一个游标，包含aggregate执行计划详细信息。</li>
+</ul>
+</li>
+</ol>
+<p>五、代码示例:</p>
+<p><em>示例代码过长,可以咯过</em><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br></pre></td><td class="code"><pre><span class="line">db.items.insert( [</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">2</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">5.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p003"</span>,</span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">2</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">8.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p002"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">1</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">4.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p002"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">2</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">4.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p001"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">4</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">10.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p003"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">10</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">20.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p001"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">10</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">20.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p003"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">   <span class="string">"quantity"</span> : <span class="number">5</span>,</span><br><span class="line">   <span class="string">"price"</span> : <span class="number">10.0</span>,</span><br><span class="line">   <span class="string">"pnumber"</span> : <span class="string">"p002"</span></span><br><span class="line">  &#125;</span><br><span class="line">])	   </span><br><span class="line"></span><br><span class="line"><span class="comment">// group 示例</span></span><br><span class="line">&gt; db.items.count()</span><br><span class="line"><span class="number">8</span></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">count</span>:&#123;<span class="attr">$sum</span>:<span class="number">1</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="literal">null</span>, <span class="string">"count"</span> : <span class="number">8</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="literal">null</span>, <span class="string">"total"</span> : <span class="number">36</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"total"</span> : <span class="number">12</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"total"</span> : <span class="number">8</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"total"</span> : <span class="number">16</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">max</span>:&#123;<span class="attr">$max</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"max"</span> : <span class="number">10</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"max"</span> : <span class="number">5</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"max"</span> : <span class="number">10</span> &#125; </span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">min</span>:&#123;<span class="attr">$min</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"min"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"min"</span> : <span class="number">1</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"min"</span> : <span class="number">2</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"total"</span> : <span class="number">12</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"total"</span> : <span class="number">8</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"total"</span> : <span class="number">16</span> &#125;</span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">max</span>:&#123;<span class="attr">$max</span>:<span class="string">"$total"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="literal">null</span>, <span class="string">"max"</span> : <span class="number">16</span> &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">price</span>:&#123;<span class="attr">$avg</span>:<span class="string">"$price"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"price"</span> : <span class="number">12</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"price"</span> : <span class="number">7.333333333333333</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"price"</span> : <span class="number">11.666666666666666</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$push</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">10</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">4</span>, <span class="number">10</span> ] &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$push</span>:&#123;<span class="attr">quantity</span>:<span class="string">"$quantity"</span>,<span class="attr">price</span>:<span class="string">"$price"</span>&#125;&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : [ &#123; <span class="string">"quantity"</span> : <span class="number">2</span>, <span class="string">"price"</span> : <span class="number">4</span> &#125;, &#123; <span class="string">"quantity"</span>: <span class="number">10</span>, <span class="string">"price"</span> : <span class="number">20</span> &#125; ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : [ &#123; <span class="string">"quantity"</span> : <span class="number">2</span>, <span class="string">"price"</span> : <span class="number">8</span> &#125;, &#123; <span class="string">"quantity"</span>: <span class="number">1</span>, <span class="string">"price"</span> : <span class="number">4</span> &#125;, &#123; <span class="string">"quantity"</span> : <span class="number">5</span>, <span class="string">"price"</span> : <span class="number">10</span> &#125; ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : [ &#123; <span class="string">"quantity"</span> : <span class="number">2</span>, <span class="string">"price"</span> : <span class="number">5</span> &#125;, &#123; <span class="string">"quantity"</span>: <span class="number">4</span>, <span class="string">"price"</span> : <span class="number">10</span> &#125;, &#123; <span class="string">"quantity"</span> : <span class="number">10</span>, <span class="string">"price"</span> : <span class="number">20</span> &#125; ] &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$addToSet</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : [ <span class="number">10</span>, <span class="number">2</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : [ <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : [ <span class="number">10</span>, <span class="number">4</span>, <span class="number">2</span> ] &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantityFrist</span>:&#123;<span class="attr">$first</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantityFrist"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantityFrist"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantityFrist"</span> : <span class="number">2</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $project 示例</span></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">count</span>:&#123;<span class="attr">$sum</span>:<span class="number">1</span>&#125;&#125;&#125;,&#123;<span class="attr">$project</span>:&#123;<span class="string">"_id"</span>:<span class="number">0</span>,<span class="string">"count"</span>:<span class="number">1</span>&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"count"</span> : <span class="number">8</span> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// $match 示例</span></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123;<span class="attr">$match</span>:&#123;<span class="attr">total</span>:&#123;<span class="attr">$gt</span>:<span class="number">8</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"total"</span> : <span class="number">12</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"total"</span> : <span class="number">16</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$match</span>:&#123;<span class="string">"pnumber"</span>:<span class="string">"p001"</span>&#125;&#125;,&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="literal">null</span>, <span class="string">"total"</span> : <span class="number">12</span> &#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// $skip、$limit、$sort </span></span><br><span class="line"><span class="comment">//    $limit、$skip、$sort、$match可以使用在阶段管道，如果使用在$group之前可以过滤掉一些数据，提高性能。</span></span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123; <span class="attr">$skip</span>: <span class="number">2</span> &#125;,&#123; <span class="attr">$limit</span>: <span class="number">4</span> &#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac4"</span>), <span class="string">"quantity"</span> : <span class="number">1</span>, <span class="string">"price"</span> : <span class="number">4</span>, <span class="string">"pnumber"</span> : <span class="string">"p002"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac5"</span>), <span class="string">"quantity"</span> : <span class="number">2</span>, <span class="string">"price"</span> : <span class="number">4</span>, <span class="string">"pnumber"</span> : <span class="string">"p001"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac6"</span>), <span class="string">"quantity"</span> : <span class="number">4</span>, <span class="string">"price"</span> : <span class="number">10</span>, <span class="string">"pnumber"</span> : <span class="string">"p003"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac7"</span>), <span class="string">"quantity"</span> : <span class="number">10</span>, <span class="string">"price"</span> : <span class="number">20</span>, <span class="string">"pnumber"</span> : <span class="string">"p001"</span> &#125;</span><br><span class="line">&gt; db.items.aggregate([&#123; <span class="attr">$limit</span>: <span class="number">4</span> &#125;,&#123; <span class="attr">$skip</span>: <span class="number">2</span> &#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac4"</span>), <span class="string">"quantity"</span> : <span class="number">1</span>, <span class="string">"price"</span> : <span class="number">4</span>, <span class="string">"pnumber"</span> : <span class="string">"p002"</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"574d937cfafef57ee4427ac5"</span>), <span class="string">"quantity"</span> : <span class="number">2</span>, <span class="string">"price"</span> : <span class="number">4</span>, <span class="string">"pnumber"</span> : <span class="string">"p001"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $unwind</span></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$push</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">10</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span> ] &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : [ <span class="number">2</span>, <span class="number">4</span>, <span class="number">10</span> ] &#125;</span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$push</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123;<span class="attr">$unwind</span>:<span class="string">"$quantitys"</span>&#125;])</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">1</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">5</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">4</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $out</span></span><br><span class="line"><span class="comment">//必须为pipeline最后一个阶段管道，因为是将最后计算结果写入到指定的collection中。</span></span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p001"</span>, <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">1</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p002"</span>, <span class="string">"quantitys"</span> : <span class="number">5</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">4</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="string">"p003"</span>, <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">quantitys</span>:&#123;<span class="attr">$push</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123;<span class="attr">$unwind</span>:<span class="string">"$quantitys"</span>&#125;,&#123;<span class="attr">$project</span>:&#123;<span class="string">"_id"</span>:<span class="number">0</span>,<span class="string">"quantitys"</span>:<span class="number">1</span>&#125;&#125;,&#123;<span class="attr">$out</span>:<span class="string">"result"</span>&#125;])</span><br><span class="line">&gt; db.result.find()</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a29"</span>), <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2a"</span>), <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2b"</span>), <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2c"</span>), <span class="string">"quantitys"</span> : <span class="number">1</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2d"</span>), <span class="string">"quantitys"</span> : <span class="number">5</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2e"</span>), <span class="string">"quantitys"</span> : <span class="number">2</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a2f"</span>), <span class="string">"quantitys"</span> : <span class="number">4</span> &#125;</span><br><span class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"57529143746e15e8aa207a30"</span>), <span class="string">"quantitys"</span> : <span class="number">10</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $redact</span></span><br><span class="line"><span class="comment">/*语法：&#123; $redact: &lt;expression&gt; &#125;</span></span><br><span class="line"><span class="comment">   $redact 跟$cond结合使用，并在$cond里面使用了if 、then、else表达式，if-else缺一不可，$redact还有三个重要的参数：</span></span><br><span class="line"><span class="comment">     1）$$DESCEND： 返回包含当前document级别的所有字段，并且会继续判字段包含内嵌文档，内嵌文档的字段也会去判断是否符合条件。</span></span><br><span class="line"><span class="comment">     2）$$PRUNE：返回不包含当前文档或者内嵌文档级别的所有字段，不会继续检测此级别的其他字段，即使这些字段的内嵌文档持有相同的访问级别。</span></span><br><span class="line"><span class="comment">     3）$$KEEP：返回包含当前文档或内嵌文档级别的所有字段，不再继续检测此级别的其他字段，即使这些字段的内嵌文档中持有不同的访问级别。</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  level=1则值为为$$DESCEND，否则为$$PRUNE，从顶部开始扫描下去，执行$$DESCEND包含当前document级别的所有fields。当前级别字段的内嵌文档将会被继续检测。</span></span><br><span class="line">db.redact.insert(</span><br><span class="line">  &#123;</span><br><span class="line">  _id: <span class="number">1</span>,</span><br><span class="line">  level: <span class="number">1</span>,</span><br><span class="line">  status: <span class="string">"A"</span>,</span><br><span class="line">  acct_id: <span class="string">"xyz123"</span>,</span><br><span class="line">  cc: [&#123;</span><br><span class="line">    level: <span class="number">1</span>,</span><br><span class="line">    type: <span class="string">"yy"</span>,</span><br><span class="line">    num: <span class="number">000000000000</span>,</span><br><span class="line">    exp_date: ISODate(<span class="string">"2015-11-01T00:00:00.000Z"</span>),</span><br><span class="line">    billing_addr: &#123;</span><br><span class="line">      level: <span class="number">5</span>,</span><br><span class="line">      addr1: <span class="string">"123 ABC Street"</span>,</span><br><span class="line">      city: <span class="string">"Some City"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,&#123;</span><br><span class="line">     level: <span class="number">3</span>,</span><br><span class="line">    type: <span class="string">"yy"</span>,</span><br><span class="line">    num: <span class="number">000000000000</span>,</span><br><span class="line">    exp_date: ISODate(<span class="string">"2015-11-01T00:00:00.000Z"</span>),</span><br><span class="line">    billing_addr: &#123;</span><br><span class="line">      level: <span class="number">1</span>,</span><br><span class="line">      addr1: <span class="string">"123 ABC Street"</span>,</span><br><span class="line">      city: <span class="string">"Some City"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;]</span><br><span class="line">&#125;)</span><br><span class="line"> </span><br><span class="line">db.redact.aggregate(</span><br><span class="line">  [</span><br><span class="line">    &#123; <span class="attr">$match</span>: &#123; <span class="attr">status</span>: <span class="string">"A"</span> &#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      $redact: &#123;</span><br><span class="line">        $cond: &#123;</span><br><span class="line">          <span class="keyword">if</span>: &#123; <span class="attr">$eq</span>: [ <span class="string">"$level"</span>, <span class="number">1</span>] &#125;,</span><br><span class="line">          then: <span class="string">"$$DESCEND"</span>,</span><br><span class="line">          <span class="keyword">else</span>: <span class="string">"$$PRUNE"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"_id"</span> : <span class="number">1</span>,</span><br><span class="line">  <span class="string">"level"</span> : <span class="number">1</span>,</span><br><span class="line">  <span class="string">"status"</span> : <span class="string">"A"</span>,</span><br><span class="line">  <span class="string">"acct_id"</span> : <span class="string">"xyz123"</span>,</span><br><span class="line">  <span class="string">"cc"</span> : [</span><br><span class="line">           &#123; <span class="string">"level"</span> : <span class="number">1</span>,</span><br><span class="line">     <span class="string">"type"</span> : <span class="string">"yy"</span>,</span><br><span class="line"> <span class="string">"num"</span> : <span class="number">0</span>,</span><br><span class="line"> <span class="string">"exp_date"</span> : ISODate(<span class="string">"2015-11-01T00:00:00Z"</span>)</span><br><span class="line">&#125;</span><br><span class="line">   ]</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. $$PRUNE：不包含当前文档或者内嵌文档级别的所有字段，不会继续检测此级别的其他字段，即使这些字段的内嵌文档持有相同的访问级别。连等级的字段都不显示，也不会去扫描等级字段包含下级。</span></span><br><span class="line">db.redact.insert(</span><br><span class="line">  &#123;</span><br><span class="line">  _id: <span class="number">1</span>,</span><br><span class="line">  level: <span class="number">1</span>,</span><br><span class="line">  status: <span class="string">"A"</span>,</span><br><span class="line">  acct_id: <span class="string">"xyz123"</span>,</span><br><span class="line">  cc: &#123;</span><br><span class="line">    level: <span class="number">3</span>,</span><br><span class="line">    type: <span class="string">"yy"</span>,</span><br><span class="line">    num: <span class="number">000000000000</span>,</span><br><span class="line">    exp_date: ISODate(<span class="string">"2015-11-01T00:00:00.000Z"</span>),</span><br><span class="line">    billing_addr: &#123;</span><br><span class="line">      level: <span class="number">1</span>,</span><br><span class="line">      addr1: <span class="string">"123 ABC Street"</span>,</span><br><span class="line">      city: <span class="string">"Some City"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br><span class="line">)</span><br><span class="line">db.redact.aggregate(</span><br><span class="line">  [</span><br><span class="line">    &#123; <span class="attr">$match</span>: &#123; <span class="attr">status</span>: <span class="string">"A"</span> &#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      $redact: &#123;</span><br><span class="line">        $cond: &#123;</span><br><span class="line">          <span class="keyword">if</span>: &#123; <span class="attr">$eq</span>: [ <span class="string">"$level"</span>, <span class="number">3</span>] &#125;,</span><br><span class="line">          then: <span class="string">"$$PRUNE"</span>,</span><br><span class="line">          <span class="keyword">else</span>: <span class="string">"$$DESCEND"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">);</span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="number">1</span>, <span class="string">"level"</span> : <span class="number">1</span>, <span class="string">"status"</span> : <span class="string">"A"</span>, <span class="string">"acct_id"</span> : <span class="string">"xyz123"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  3、$$KEEP：返回包含当前文档或内嵌文档级别的所有字段，不再继续检测此级别的其他字段，即使这些字段的内嵌文档中持有不同的访问级别。</span></span><br><span class="line">db.redact.insert(</span><br><span class="line">  &#123;</span><br><span class="line">  _id: <span class="number">1</span>,</span><br><span class="line">  level: <span class="number">1</span>,</span><br><span class="line">  status: <span class="string">"A"</span>,</span><br><span class="line">  acct_id: <span class="string">"xyz123"</span>,</span><br><span class="line">  cc: &#123;</span><br><span class="line">    level: <span class="number">2</span>,</span><br><span class="line">    type: <span class="string">"yy"</span>,</span><br><span class="line">    num: <span class="number">000000000000</span>,</span><br><span class="line">    exp_date: ISODate(<span class="string">"2015-11-01T00:00:00.000Z"</span>),</span><br><span class="line">    billing_addr: &#123;</span><br><span class="line">      level:<span class="number">3</span>,</span><br><span class="line">      addr1: <span class="string">"123 ABC Street"</span>,</span><br><span class="line">      city: <span class="string">"Some City"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">db.redact.aggregate(</span><br><span class="line">  [</span><br><span class="line">    &#123; <span class="attr">$match</span>: &#123; <span class="attr">status</span>: <span class="string">"A"</span> &#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      $redact: &#123;</span><br><span class="line">        $cond: &#123;</span><br><span class="line">          <span class="keyword">if</span>: &#123; <span class="attr">$eq</span>: [ <span class="string">"$level"</span>, <span class="number">1</span>] &#125;,</span><br><span class="line">          then: <span class="string">"$$KEEP"</span>,</span><br><span class="line">          <span class="keyword">else</span>: <span class="string">"$$PRUNE"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">);</span><br><span class="line"> </span><br><span class="line">&#123; <span class="string">"_id"</span> : <span class="number">1</span>, <span class="string">"level"</span> : <span class="number">1</span>, <span class="string">"status"</span> : <span class="string">"A"</span>, <span class="string">"acct_id"</span> : <span class="string">"xyz123"</span>, <span class="string">"cc"</span> : &#123; <span class="string">"level"</span> : <span class="number">2</span>, <span class="string">"type"</span> : <span class="string">"yy"</span>, <span class="string">"num"</span> : <span class="number">0</span>, <span class="string">"exp_date"</span> : ISODate(<span class="string">"2015-11-01T00:00:00Z"</span>), <span class="string">"billing_addr"</span> : &#123; <span class="string">"level"</span> : <span class="number">3</span>, <span class="string">"addr1"</span> : <span class="string">"123 ABC Street"</span>, <span class="string">"city"</span> : <span class="string">"Some City"</span> &#125; &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// opiton 示例</span></span><br><span class="line">db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="literal">null</span>,<span class="attr">max</span>:&#123;<span class="attr">$max</span>:<span class="string">"$total"</span>&#125;&#125;&#125;],&#123;<span class="attr">explain</span>:<span class="literal">true</span>&#125;) </span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"stages"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"$cursor"</span>: &#123;</span><br><span class="line">                <span class="string">"query"</span>: &#123;&#125;,</span><br><span class="line">                <span class="string">"fields"</span>: &#123;</span><br><span class="line">                    <span class="string">"pnumber"</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="string">"quantity"</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="string">"_id"</span>: <span class="number">0</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">"plan"</span>: &#123;</span><br><span class="line">                    <span class="string">"cursor"</span>: <span class="string">"BasicCursor"</span>,</span><br><span class="line">                    <span class="string">"isMultiKey"</span>: <span class="literal">false</span>,</span><br><span class="line">                    <span class="string">"scanAndOrder"</span>: <span class="literal">false</span>,</span><br><span class="line">                    <span class="string">"allPlans"</span>: [</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="string">"cursor"</span>: <span class="string">"BasicCursor"</span>,</span><br><span class="line">                            <span class="string">"isMultiKey"</span>: <span class="literal">false</span>,</span><br><span class="line">                            <span class="string">"scanAndOrder"</span>: <span class="literal">false</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"$group"</span>: &#123;</span><br><span class="line">                <span class="string">"_id"</span>: <span class="string">"$pnumber"</span>,</span><br><span class="line">                <span class="string">"total"</span>: &#123;</span><br><span class="line">                    <span class="string">"$sum"</span>: <span class="string">"$quantity"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"$group"</span>: &#123;</span><br><span class="line">                <span class="string">"_id"</span>: &#123;</span><br><span class="line">                    <span class="string">"$const"</span>: <span class="literal">null</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">"max"</span>: &#123;</span><br><span class="line">                    <span class="string">"$max"</span>: <span class="string">"$total"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"ok"</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="六、其他"><a href="#六、其他" class="headerlink" title="六、其他"></a>六、其他</h2><ul>
+<li>allowDiskUse:每个阶段管道限制为100MB的内存，如果大于100MB的数据可以先写入临时文件。设置为true时，aggregate操作可时可以先将数据写入对应数据目录的子目录中的唯一并以_tmp结尾的文档中。</li>
+<li><p>cursor:指定游标的初始批批大小。光标的字段的值是一个与场batchSize文件。</p>
+<ul>
+<li>语法:     <code>cursor: { batchSize: &lt;int&gt; }</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cursor=db.items.aggregate([&#123;<span class="attr">$group</span>:&#123;<span class="attr">_id</span>:<span class="string">"$pnumber"</span>,<span class="attr">total</span>:&#123;<span class="attr">$sum</span>:<span class="string">"$quantity"</span>&#125;&#125;&#125;,&#123; <span class="attr">$limit</span>: <span class="number">2</span> &#125;],&#123;<span class="attr">cursor</span>: &#123; <span class="attr">batchSize</span>: <span class="number">1</span> &#125;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>mongodb shell  设置游标大小cursor.batchSize(size) 一次返回多少条,游标提供了很多方法：</p>
+<ul>
+<li>cursor.hasNext()</li>
+<li>cursor.next()</li>
+<li>cursor.toArray()</li>
+<li>cursor.forEach()</li>
+<li>cursor.map()</li>
+<li>cursor.objsLeftInBatch()</li>
+<li>cursor.itcount()</li>
+<li>cursor.pretty()</li>
+</ul>
+</li>
+<li>bypassDocumentValidation:只有当你指定了$out操作符，使db.collection.aggregate绕过文档验证操作过程中。这让您插入不符合验证要求的文档 </li>
+</ul>
+
+                </div>
+            </section>
+        </article>
+    </div>
+
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="MongoDB基础查询语法" href="/2018/04/18/MongoDB/Mongodb查询语法/">
+            MongoDB基础查询语法 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#零、引用"><span class="toc-text">零、引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Aggregate-简介"><span class="toc-text">一、Aggregate 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、处理示例图"><span class="toc-text">二、处理示例图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、特点"><span class="toc-text">三、特点:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、aggregate语法"><span class="toc-text">四、aggregate语法:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、其他"><span class="toc-text">六、其他</span></a></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Ting723 &mdash;</small>
+    <h3 class="read-next-card-header-title">Articles récents</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2018/04/24/MongoDB/MongoDB聚合总结/">MongoDB聚合查询</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2018/04/18/MongoDB/Mongodb查询语法/">MongoDB基础查询语法</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2017/12/24/Java/basis/JDK Composition/">JDK Composition</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+    <header class="read-next-card-header" style="padding-bottom: 20px">
+        <h3 class="read-next-card-header-title">Catégories</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技巧/">技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/知识点/">知识点</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/规范/">规范</a></li></ul>
+        </ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(/img/background.webp)">
+	<header class="read-next-card-header" style="padding-bottom: 20px">
+		<h3 class="read-next-card-header-title">Nuage de mot-clés</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/Dubbo/" style="font-size: 14px;">Dubbo</a> <a href="/tags/IDE/" style="font-size: 14px;">IDE</a> <a href="/tags/Java/" style="font-size: 21.5px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 16.5px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 21.5px;">Linux</a> <a href="/tags/Object/" style="font-size: 14px;">Object</a> <a href="/tags/Problem/" style="font-size: 14px;">Problem</a> <a href="/tags/SVN/" style="font-size: 14px;">SVN</a> <a href="/tags/Vim/" style="font-size: 16.5px;">Vim</a> <a href="/tags/annotation/" style="font-size: 14px;">annotation</a> <a href="/tags/design-pattern/" style="font-size: 14px;">design pattern</a> <a href="/tags/editorConfig/" style="font-size: 14px;">editorConfig</a> <a href="/tags/efficiency/" style="font-size: 21.5px;">efficiency</a> <a href="/tags/hexo/" style="font-size: 16.5px;">hexo</a> <a href="/tags/java/" style="font-size: 24px;">java</a> <a href="/tags/java-basis/" style="font-size: 19px;">java basis</a> <a href="/tags/jdk/" style="font-size: 14px;">jdk</a> <a href="/tags/maven/" style="font-size: 14px;">maven</a> <a href="/tags/mongodb/" style="font-size: 16.5px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/native/" style="font-size: 14px;">native</a> <a href="/tags/nodejs/" style="font-size: 14px;">nodejs</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tcpCopy/" style="font-size: 14px;">tcpCopy</a> <a href="/tags/vbs/" style="font-size: 14px;">vbs</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Rechercher ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Ting723">Ting723</a>
+			&copy; 2019
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+        </nav>
+    </div>
+</footer>
+	
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="Ting723">
+			
+                <img src="https://avatars1.githubusercontent.com/u/8120470?s=60&v=4" alt="Ting723 icon">
+			
+            <span>Ting723</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">MongoDB聚合查询</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'wwNopfiuPd0mm7w4SGo7OmXE-gzGzoHsz',
+        appKey: 'kw3i3QGtS9SypfctVJqgk7QN',
+        placeholder: '留下你的疑惑和思考',
+        pageSize: 20,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
+<script>searchFunc("/")</script>
+
+
+
+
+
+</body>
+</html>
