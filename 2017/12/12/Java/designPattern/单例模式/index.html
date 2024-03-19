@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>单例模式 | Ting723</title><meta name="author" content="ting723"><meta name="copyright" content="ting723"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 定义 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例,而且自行实例化并向整个系统提供这个实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式">
+<meta property="og:url" content="http://ting723.github.io/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Ting723">
+<meta property="og:description" content="1. 定义 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例,而且自行实例化并向整个系统提供这个实例。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ting723.github.io/img/cover.jpg">
+<meta property="article:published_time" content="2017-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-17T10:51:13.589Z">
+<meta property="article:author" content="ting723">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="design pattern">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ting723.github.io/img/cover.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="http://ting723.github.io/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '单例模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-17 18:51:13'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars1.githubusercontent.com/u/8120470?s=60&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> HOME</span></a></div><div class="menus_item"><a class="site-page" href="/practice/"><span> PRACTICE</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> ARCHIVES</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> ABOUT</span></a></div><div class="menus_item"><a class="site-page" href="/tipping/"><span> TIPPING</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Ting723"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">Ting723</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> HOME</span></a></div><div class="menus_item"><a class="site-page" href="/practice/"><span> PRACTICE</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> ARCHIVES</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> ABOUT</span></a></div><div class="menus_item"><a class="site-page" href="/tipping/"><span> TIPPING</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">单例模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-12-11T16:00:00.000Z" title="发表于 2017-12-12 00:00:00">2017-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-17T10:51:13.589Z" title="更新于 2024-03-17 18:51:13">2024-03-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="单例模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><blockquote>
+<p>Ensure a class has only one instance, and provide a global point of access to it.<br>确保某一个类只有一个实例,而且自行实例化并向整个系统提供这个实例。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="2-要点"><a href="#2-要点" class="headerlink" title="2. 要点"></a>2. 要点</h2><ul>
+<li>只创建一次</li>
+<li>通常将构造器私有化</li>
+<li>需注意线程安全</li>
+<li>懒加载(lazy loading)</li>
+<li>一般不考虑反射(Java反射可以实例化private)</li>
+</ul>
+<h2 id="3-单例模式的种类"><a href="#3-单例模式的种类" class="headerlink" title="3. 单例模式的种类"></a>3. 单例模式的种类</h2><h3 id="3-1-饿汉模式"><a href="#3-1-饿汉模式" class="headerlink" title="3.1 饿汉模式"></a>3.1 饿汉模式</h3><ul>
+<li>3.1.1 公有的静态final域  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Hungry</span> <span class="keyword">extends</span> <span class="title class_">BasePattern</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Singleton_Hungry</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton_Hungry</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_Hungry</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>分析</strong></p>
+<ol>
+<li>够简单粗暴</li>
+<li>代码清晰表明是个单例</li>
+<li>无lazy loading</li>
+</ol>
+<ul>
+<li>3.1.2 静态工厂实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Hungry</span> <span class="keyword">extends</span> <span class="title class_">BasePattern</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Singleton_Hungry</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton_Hungry</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_Hungry</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_Hungry <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析:</strong></p>
+<ol>
+<li>线程安全(使用ClassLoader机制避免了多线程同步)</li>
+<li>没有实现懒加载(lazy loading),将类的创建委托给了类装载器</li>
+<li>主要在类加载时,就自行初始化了</li>
+<li>也可以在static块中进行初始化</li>
+<li>静态工厂实现,有更大灵活性</li>
+</ol>
+<h3 id="3-2-懒汉模式"><a href="#3-2-懒汉模式" class="headerlink" title="3.2 懒汉模式"></a>3.2 懒汉模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Lazy</span> <span class="keyword">extends</span> <span class="title class_">BasePattern</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton_Lazy</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_Lazy</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_Lazy <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="literal">null</span>) singleton = <span class="keyword">new</span> <span class="title class_">Singleton_Lazy</span>();</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析:</strong></p>
+<ol>
+<li>Lazy Loading </li>
+<li>并发下,线程不安全,有可能重复创建对象</li>
+<li>不推荐在生产中使用</li>
+</ol>
+<h3 id="3-3-改进式饿汉模式"><a href="#3-3-改进式饿汉模式" class="headerlink" title="3.3 改进式饿汉模式"></a>3.3 改进式饿汉模式</h3><ul>
+<li>方式一:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Lazy_Sync</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton_Lazy_Sync</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_Lazy_Sync</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton_Lazy_Sync <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="literal">null</span>) singleton = <span class="keyword">new</span> <span class="title class_">Singleton_Lazy_Sync</span>();</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>备注: synchronized 确保只有一个线程访问</em>   </p>
+<p><strong>分析</strong></p>
+<ol>
+<li>保证了getInstance()的并发情况下的,只能有一个线程访问</li>
+<li>效率过低,每次都要确保同步的情况下获取实例</li>
+<li>不推荐使用</li>
+</ol>
+<ul>
+<li>方式二:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Lazy_Sync</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton_Lazy_Sync</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_Lazy_Sync</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_Lazy_Sync <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">synchronized</span>(Singleton_Lazy_Sync.class)&#123;</span><br><span class="line">        	<span class="keyword">if</span> (singleton == <span class="literal">null</span>) singleton = <span class="keyword">new</span> <span class="title class_">Singleton_Lazy_Sync</span>();</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>加synchronized确保并发情况下能其为同一时刻只能有一个线程能够访问</li>
+<li>对Singleton_Lazy_Sync类加同步关键字,效率同样偏低</li>
+</ol>
+<h3 id="3-4-双重校验锁方式"><a href="#3-4-双重校验锁方式" class="headerlink" title="3.4 双重校验锁方式"></a>3.4 双重校验锁方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_DoubleCheck</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton_DoubleCheck singleton;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_DoubleCheck</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_DoubleCheck <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton_DoubleCheck.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (singleton == <span class="literal">null</span>) &#123;</span><br><span class="line">                    singleton = <span class="keyword">new</span> <span class="title class_">Singleton_DoubleCheck</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>备注:Volatile修饰的成员变量在每次被线程访问时，都强迫从共享内存中重读该成员变量的值。而且，当成员变量发生变化时，强迫线程将变化值回写到共享内存。这样在任何时刻，两个不同的线程总是看到某个成员变量的同一个值。</em></p>
+<p><strong>分析</strong></p>
+<ol>
+<li>单例仅new一次,在synchronized 加上判空语句,仅执行一次同步锁定,其余的直接跳过</li>
+<li>是基本懒汉式的改进型</li>
+<li>volatile 确保变量值直接从内存读取(多个线程中存在副本),另,该特性java 1.5版本之后才有用</li>
+<li>volatile 会禁止指令重新排序</li>
+<li>实现有点复杂</li>
+</ol>
+<h3 id="3-5-静态内部类"><a href="#3-5-静态内部类" class="headerlink" title="3.5 静态内部类"></a>3.5 静态内部类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_InnerClass</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">SingletonHolder</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton_InnerClass</span> <span class="variable">singleton</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton_InnerClass</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_InnerClass</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton_InnerClass <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>同样利用了classloder的机制来保证初始化instance时只有一个线程</li>
+<li>静态内部类只会加一次,故线程安全</li>
+<li>外部类能直接访问内部类（不管是否是静态的）的私有变量</li>
+<li>内部类SingletonHolder只有在getInstance()方法第一次调用的时候才会被加载（实现了lazy），而且其加载过程是线程安全的（实现线程安全）。内部类加载的时候仅实例化一次instance。</li>
+</ol>
+<h3 id="3-6-枚举"><a href="#3-6-枚举" class="headerlink" title="3.6 枚举"></a>3.6 枚举</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">	INSTANCE;		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>简洁优雅</li>
+<li>无偿提供了序列化机制,绝对防止多次实例化,即使使用复杂的序列化或反射攻击</li>
+<li>单元素的枚举类型</li>
+<li>枚举实例的创建默认就是线程安全</li>
+</ol>
+<h2 id="4-单例模式扩展"><a href="#4-单例模式扩展" class="headerlink" title="4 单例模式扩展"></a>4 单例模式扩展</h2><h3 id="4-1-固定数量实例"><a href="#4-1-固定数量实例" class="headerlink" title="4.1 固定数量实例"></a>4.1 固定数量实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_FixedNum</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 产生的最大实例数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">MAX_NUM</span> <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 存放实例集合</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Singleton_FixedNum&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Random</span> <span class="variable">random</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 类加载时,初始化到最大</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; MAX_NUM; i++) &#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> <span class="title class_">Singleton_FixedNum</span>(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getNum</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setNum</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.num = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_FixedNum</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton_FixedNum</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.num = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_FixedNum <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> list.get(random.nextInt(MAX_NUM));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>单例的一种扩展,限定产生的实例的数量</li>
+<li>也可以创建动态数量的实例,如线程池</li>
+</ol>
+<h3 id="4-2-登记式单例模式"><a href="#4-2-登记式单例模式" class="headerlink" title="4.2 登记式单例模式"></a>4.2 登记式单例模式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_Reg</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">HashMap</span> <span class="variable">m_reg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="type">Singleton_Reg</span> <span class="variable">singleton_reg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton_Reg</span>();</span><br><span class="line">        m_reg.put(singleton_reg.getClass().getName(), singleton_reg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="title function_">Singleton_Reg</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_Reg <span class="title function_">getInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (name == <span class="literal">null</span>) &#123;</span><br><span class="line">            name = Singleton_Reg.class.getName();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (m_reg.get(name) == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                m_reg.put(name, (Singleton_Reg) Class.forName(name).newInstance());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m_reg.get(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton_RegChild</span> <span class="keyword">extends</span> <span class="title class_">Singleton_Reg</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Singleton_RegChild</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态工厂</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton_RegChild <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (Singleton_RegChild) Singleton_Reg.getInstance(Singleton_RegChild.class.getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Singleton_RegChild.getInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>登记式单例类是Gof为了克服饿汉式和懒汉式单例均不可继承而设计的</li>
+<li>子类实现只能是懒汉式</li>
+<li>缺点: (1)由于子类必须允许父类以构造器调用产生实例，因此，<br> 它的构造方法必须是公开的这样一来，就等于允许了以这样方式产生实例<br> 而不在父类的登 记中。(2)由于父类的实例必须存在才可能有子类的实例，<br> 这在有些情况下是一个浪费。这是登记式单例类的另一个缺点</li>
+</ol>
+<h2 id="5-优点"><a href="#5-优点" class="headerlink" title="5. 优点"></a>5. 优点</h2><ol>
+<li>提供唯一个实例的受控访问,减少内存开支,减少系统性能的开销</li>
+<li>避免对资源的多重占用</li>
+<li>可以设置全局访问点,优化和共享资源访问</li>
+<li>允许可变数目的实例</li>
+</ol>
+<h2 id="6-缺点"><a href="#6-缺点" class="headerlink" title="6. 缺点"></a>6. 缺点</h2><ol>
+<li>单例模式没有接口,难以扩展</li>
+<li>单例类的职责过重,一定程度上违背了“单一职责原则”</li>
+</ol>
+<h2 id="7-应用场景"><a href="#7-应用场景" class="headerlink" title="7. 应用场景"></a>7. 应用场景</h2><ol>
+<li>项目中需要一个共享访问点或共享数据</li>
+<li>创建一个对象需要消耗的资源过多,如要访问IO</li>
+<li>需要定义大量的静态常量和静态方法(也可以直接使用static)</li>
+</ol>
+<h2 id="8-引用"><a href="#8-引用" class="headerlink" title="8. 引用"></a>8. 引用</h2><ul>
+<li>书籍</li>
+</ul>
+<blockquote>
+<p>（秦小波）《设计模式之禅》第7章<br>（Joshua Bloch）《Effective Java》 第2章 第3条</p>
+</blockquote>
+<ul>
+<li>博客<blockquote>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/jason0539/article/details/23297037/">http://blog.csdn.net/jason0539/article/details/23297037/</a><br><a target="_blank" rel="noopener" href="http://www.blogjava.net/kenzhh/archive/2013/03/15/357824.html">http://www.blogjava.net/kenzhh/archive/2013/03/15/357824.html</a><br><a target="_blank" rel="noopener" href="https://my.oschina.net/zhoujy/blog/134958">https://my.oschina.net/zhoujy/blog/134958</a><br><a target="_blank" rel="noopener" href="http://coolshell.cn/articles/265.html">http://coolshell.cn/articles/265.html</a><br><a target="_blank" rel="noopener" href="http://www.importnew.com/18872.html">http://www.importnew.com/18872.html</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/goodlixueyong/article/details/51935526">http://blog.csdn.net/goodlixueyong/article/details/51935526</a></p>
+</blockquote>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://ting723.github.io">ting723</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://ting723.github.io/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">http://ting723.github.io/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://ting723.github.io" target="_blank">Ting723</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/design-pattern/">design pattern</a></div><div class="post_share"><div class="social-share" data-image="/img/cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/12/24/Java/basis/JDK%20Composition/" title="JDK Composition"><img class="cover" src="/img/cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JDK Composition</div></div></a></div><div class="next-post pull-right"><a href="/2017/02/25/Java/basis/Java%E6%B3%A8%E8%A7%A3/" title="Java 注解基础知识"><img class="cover" src="/img/cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java 注解基础知识</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2017/12/24/Java/basis/JDK%20Composition/" title="JDK Composition"><img class="cover" src="/img/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-12-24</div><div class="title">JDK Composition</div></div></a></div><div><a href="/2017/02/25/Java/basis/Java%E6%B3%A8%E8%A7%A3/" title="Java 注解基础知识"><img class="cover" src="/img/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-02-25</div><div class="title">Java 注解基础知识</div></div></a></div><div><a href="/2016/12/20/Java/basis/Java%20Object%E7%B1%BB/" title="Java Object类"><img class="cover" src="/img/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-12-20</div><div class="title">Java Object类</div></div></a></div><div><a href="/2016/12/19/Java/basis/Java%20native%E5%85%B3%E9%94%AE%E5%AD%97/" title="Java的native关键字及JNI"><img class="cover" src="/img/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-12-19</div><div class="title">Java的native关键字及JNI</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars1.githubusercontent.com/u/8120470?s=60&amp;v=4" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ting723</div><div class="author-info__description">一个程序员的秘密花园</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ting723"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ting723" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">1. 定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A6%81%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">2. 要点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">3. 单例模式的种类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%A5%BF%E6%B1%89%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 饿汉模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 懒汉模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%94%B9%E8%BF%9B%E5%BC%8F%E9%A5%BF%E6%B1%89%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 改进式饿汉模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%8F%8C%E9%87%8D%E6%A0%A1%E9%AA%8C%E9%94%81%E6%96%B9%E5%BC%8F"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 双重校验锁方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 静态内部类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E6%9E%9A%E4%B8%BE"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 枚举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-number">4.</span> <span class="toc-text">4 单例模式扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%9B%BA%E5%AE%9A%E6%95%B0%E9%87%8F%E5%AE%9E%E4%BE%8B"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 固定数量实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%99%BB%E8%AE%B0%E5%BC%8F%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 登记式单例模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%98%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">5. 优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%BC%BA%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">6. 缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">7.</span> <span class="toc-text">7. 应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%BC%95%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text">8. 引用</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2018/04/24/MongoDB/MongoDB%E8%81%9A%E5%90%88%E6%80%BB%E7%BB%93/" title="MongoDB聚合查询"><img src="/img/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MongoDB聚合查询"/></a><div class="content"><a class="title" href="/2018/04/24/MongoDB/MongoDB%E8%81%9A%E5%90%88%E6%80%BB%E7%BB%93/" title="MongoDB聚合查询">MongoDB聚合查询</a><time datetime="2018-04-23T16:00:00.000Z" title="发表于 2018-04-24 00:00:00">2018-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2018/04/18/MongoDB/Mongodb%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95/" title="MongoDB基础查询语法"><img src="/img/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MongoDB基础查询语法"/></a><div class="content"><a class="title" href="/2018/04/18/MongoDB/Mongodb%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95/" title="MongoDB基础查询语法">MongoDB基础查询语法</a><time datetime="2018-04-17T16:00:00.000Z" title="发表于 2018-04-18 00:00:00">2018-04-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2017/12/24/Java/basis/JDK%20Composition/" title="JDK Composition"><img src="/img/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK Composition"/></a><div class="content"><a class="title" href="/2017/12/24/Java/basis/JDK%20Composition/" title="JDK Composition">JDK Composition</a><time datetime="2017-12-23T16:00:00.000Z" title="发表于 2017-12-24 00:00:00">2017-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="单例模式"><img src="/img/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/2017/12/12/Java/designPattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="单例模式">单例模式</a><time datetime="2017-12-11T16:00:00.000Z" title="发表于 2017-12-12 00:00:00">2017-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2017/02/25/Java/basis/Java%E6%B3%A8%E8%A7%A3/" title="Java 注解基础知识"><img src="/img/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 注解基础知识"/></a><div class="content"><a class="title" href="/2017/02/25/Java/basis/Java%E6%B3%A8%E8%A7%A3/" title="Java 注解基础知识">Java 注解基础知识</a><time datetime="2017-02-25T12:00:00.000Z" title="发表于 2017-02-25 20:00:00">2017-02-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ting723</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
